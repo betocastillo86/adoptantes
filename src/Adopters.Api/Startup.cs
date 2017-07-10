@@ -6,6 +6,9 @@
 namespace Adopters.Api
 {
     using Adopters.Api.Infraestructure.Start;
+    using Beto.Core.Web.Api;
+    using Beto.Core.Web.Api.Filters;
+    using FluentValidation.AspNetCore;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.Extensions.Configuration;
@@ -61,7 +64,10 @@ namespace Adopters.Api
         public void ConfigureServices(IServiceCollection services)
         {
             // Add framework services.
-            services.AddMvc();
+            services.AddMvc(options => {
+                options.Filters.Add(new FluentValidatorAttribute());
+            })
+            .AddFluentValidation(c => c.RegisterValidatorsFromAssemblyContaining<Startup>());
 
             services.RegisterAdoptersServices(this.Configuration);
         }

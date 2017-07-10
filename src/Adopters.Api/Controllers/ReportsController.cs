@@ -5,8 +5,10 @@
 //-----------------------------------------------------------------------
 namespace Adopters.Api.Controllers
 {
+    using Adopters.Api.Models;
     using Beto.Core.Exceptions;
     using Beto.Core.Web.Api.Controllers;
+    using Beto.Core.Web.Api.Models;
     using Microsoft.AspNetCore.Mvc;
 
     /// <summary>
@@ -26,9 +28,18 @@ namespace Adopters.Api.Controllers
         }
 
         [HttpGet]
-        public IActionResult Get()
+        public IActionResult Get([FromQuery] ReportFilterModel filter)
         {
-            return this.Ok(new { Response = "Completed" });
+            if (this.ModelState.IsValid)
+            {
+                //var validator = new BaseFilterModelValidator();
+                //var x = validator.Validate(filter);
+                return this.Ok(new { Response = "Completed" });
+            }
+            else
+            {
+                return this.BadRequest(this.ModelState);
+            }
         }
     }
 }
