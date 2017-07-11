@@ -1,14 +1,15 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="AdoptersController.cs" company="Gabriel Castillo">
+// <copyright file="ReportsController.cs" company="Gabriel Castillo">
 //     Company copyright tag.
 // </copyright>
 //-----------------------------------------------------------------------
 namespace Adopters.Api.Controllers
 {
     using Adopters.Api.Models;
+    using Adopters.Data.Entities;
+    using Beto.Core.Data;
     using Beto.Core.Exceptions;
     using Beto.Core.Web.Api.Controllers;
-    using Beto.Core.Web.Api.Models;
     using Microsoft.AspNetCore.Mvc;
 
     /// <summary>
@@ -19,21 +20,23 @@ namespace Adopters.Api.Controllers
     public class ReportsController : BaseApiController
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="AdoptersController"/> class.
+        /// Initializes a new instance of the <see cref="ReportsController"/> class.
         /// </summary>
         /// <param name="messageExceptionFinder">The message exception finder.</param>
         public ReportsController(IMessageExceptionFinder messageExceptionFinder) : base(messageExceptionFinder)
         {
-
         }
 
+        /// <summary>
+        /// Gets the specified filter.
+        /// </summary>
+        /// <param name="filter">The filter.</param>
+        /// <returns>the action</returns>
         [HttpGet]
         public IActionResult Get([FromQuery] ReportFilterModel filter)
         {
             if (this.ModelState.IsValid)
             {
-                //var validator = new BaseFilterModelValidator();
-                //var x = validator.Validate(filter);
                 return this.Ok(new { Response = "Completed" });
             }
             else

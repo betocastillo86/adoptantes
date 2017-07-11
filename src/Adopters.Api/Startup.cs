@@ -6,8 +6,9 @@
 namespace Adopters.Api
 {
     using Adopters.Api.Infraestructure.Start;
-    using Beto.Core.Web.Api;
+    using Autofac;
     using Beto.Core.Web.Api.Filters;
+    using Beto.Core.Web.Middleware;
     using FluentValidation.AspNetCore;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
@@ -54,7 +55,20 @@ namespace Adopters.Api
             loggerFactory.AddConsole(this.Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
+            app.UseMiddleware<ExceptionsMiddleware>();
+
+            app.InitDatabase(env);
+
             app.UseMvc();
+        }
+
+        /// <summary>
+        /// Configures the container of AUTOFAC
+        /// </summary>
+        /// <param name="builder">container builder</param>
+        public void ConfigureContainer(ContainerBuilder builder)
+        {
+            builder.RegisterAdoptersServices(this.Configuration);
         }
 
         /// <summary>
@@ -64,7 +78,8 @@ namespace Adopters.Api
         public void ConfigureServices(IServiceCollection services)
         {
             // Add framework services.
-            services.AddMvc(options => {
+            services.AddMvc(options =>
+            {
                 options.Filters.Add(new FluentValidatorAttribute());
             })
             .AddFluentValidation(c => c.RegisterValidatorsFromAssemblyContaining<Startup>());

@@ -7,6 +7,7 @@ namespace Adopters.Data.Entities
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations.Schema;
 
     /// <summary>
     /// User Entity
@@ -43,7 +44,7 @@ namespace Adopters.Data.Entities
         /// <value>
         /// The facebook identifier.
         /// </value>
-        public int FacebookId { get; set; }
+        public string FacebookId { get; set; }
 
         /// <summary>
         /// Gets or sets the location identifier.
@@ -54,10 +55,10 @@ namespace Adopters.Data.Entities
         public int? LocationId { get; set; }
 
         /// <summary>
-        /// Gets or sets the ip address.
+        /// Gets or sets the IP address.
         /// </summary>
         /// <value>
-        /// The ip address.
+        /// The IP address.
         /// </value>
         public string IpAddress { get; set; }
 
@@ -116,5 +117,22 @@ namespace Adopters.Data.Entities
         /// The location.
         /// </value>
         public virtual Location Location { get; set; }
+
+        /// <summary>
+        /// Gets or sets The role enumerator
+        /// </summary>
+        [NotMapped]
+        public virtual Role Role
+        {
+            get
+            {
+                return (Role)this.RoleId;
+            }
+
+            set
+            {
+                this.RoleId = Convert.ToInt16(value);   
+            }
+        }
     }
 }

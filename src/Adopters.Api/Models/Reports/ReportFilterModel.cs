@@ -15,6 +15,9 @@ namespace Adopters.Api.Models
     /// <seealso cref="Beto.Core.Web.Api.BaseFilterModel" />
     public class ReportFilterModel : BaseFilterModel
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ReportFilterModel"/> class.
+        /// </summary>
         public ReportFilterModel()
         {
             this.MaxPageSize = 40;

@@ -24,11 +24,15 @@ namespace Adopters.Data.Entities.Mapping
             entity.HasIndex(e => e.Email)
                     .HasName("IX_Users");
 
-            entity.Property(e => e.Id).ValueGeneratedNever();
+            entity.Property(e => e.Id);
 
             entity.Property(e => e.Name)
                 .IsRequired()
                 .HasColumnType("varchar(150)");
+
+            entity.Property(e => e.FacebookId)
+                .IsRequired()
+                .HasColumnType("varchar(50)");
 
             entity.Property(e => e.Email)
                 .IsRequired()

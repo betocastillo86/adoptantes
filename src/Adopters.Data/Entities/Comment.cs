@@ -67,10 +67,10 @@ namespace Adopters.Data.Entities
         public bool Deleted { get; set; }
 
         /// <summary>
-        /// Gets or sets the ip address.
+        /// Gets or sets the IP address.
         /// </summary>
         /// <value>
-        /// The ip address.
+        /// The IP address.
         /// </value>
         public string IpAddress { get; set; }
 
@@ -83,10 +83,10 @@ namespace Adopters.Data.Entities
         public DateTime? ModifiedDate { get; set; }
 
         /// <summary>
-        /// Gets or sets the count subcomments.
+        /// Gets or sets the count comments.
         /// </summary>
         /// <value>
-        /// The count subcomments.
+        /// The count comments.
         /// </value>
         public int CountSubcomments { get; set; }
 

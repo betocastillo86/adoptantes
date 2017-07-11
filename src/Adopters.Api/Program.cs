@@ -6,11 +6,12 @@
 namespace Adopters.Api
 {
     using System.IO;
+    using Autofac.Extensions.DependencyInjection;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
 
     /// <summary>
-    /// The Initital Program
+    /// The Initial Program
     /// </summary>
     public class Program
     {
@@ -22,6 +23,7 @@ namespace Adopters.Api
         {
             var host = new WebHostBuilder()
                 .UseKestrel()
+                .ConfigureServices(services => services.AddAutofac())
                 .UseContentRoot(Directory.GetCurrentDirectory())
                 .UseIISIntegration()
                 .UseStartup<Startup>()

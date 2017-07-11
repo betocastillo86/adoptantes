@@ -109,12 +109,13 @@ namespace Adopters.Data.Migrations
                 name: "Users",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false),
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(type: "varchar(150)", nullable: false),
                     Email = table.Column<string>(type: "varchar(150)", nullable: false),
                     CreationDate = table.Column<DateTime>(type: "datetime", nullable: false),
                     RoleId = table.Column<short>(nullable: false),
-                    FacebookId = table.Column<int>(nullable: false),
+                    FacebookId = table.Column<string>(type: "varchar(50)", nullable: false),
                     IpAddress = table.Column<string>(type: "varchar(50)", nullable: true),
                     LocationId = table.Column<int>(nullable: true),
                     Deleted = table.Column<bool>(nullable: false)  

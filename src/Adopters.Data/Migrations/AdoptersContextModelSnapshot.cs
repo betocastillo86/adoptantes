@@ -296,7 +296,8 @@ namespace Adopters.Data.Migrations
 
             modelBuilder.Entity("Adopters.Data.Entities.User", b =>
                 {
-                    b.Property<int>("Id");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<DateTime>("CreationDate")
                         .HasColumnType("datetime");
@@ -307,7 +308,9 @@ namespace Adopters.Data.Migrations
                         .IsRequired()
                         .HasColumnType("varchar(150)");
 
-                    b.Property<int>("FacebookId");
+                    b.Property<int>("FacebookId")
+                        .IsRequired()
+                        .HasColumnType("varchar(50)");
 
                     b.Property<string>("IpAddress")
                         .HasColumnType("varchar(50)");

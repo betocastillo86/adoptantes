@@ -308,7 +308,9 @@ namespace Adopters.Data.Migrations
                         .IsRequired()
                         .HasColumnType("varchar(150)");
 
-                    b.Property<int>("FacebookId");
+                    b.Property<int>("FacebookId")
+                        .IsRequired()
+                        .HasColumnType("varchar(50)");
 
                     b.Property<string>("IpAddress")
                         .HasColumnType("varchar(50)");
