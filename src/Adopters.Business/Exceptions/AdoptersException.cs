@@ -20,5 +20,35 @@ namespace Adopters.Business.Exceptions
         public AdoptersException(string error) : base(error)
         {
         }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AdoptersException"/> class.
+        /// </summary>
+        /// <param name="code">The code.</param>
+        public AdoptersException(AdopterExceptionCode code) : base(ExceptionMessages.GetMessage(code))
+        {
+            this.Code = code;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AdoptersException"/> class.
+        /// </summary>
+        /// <param name="code">The code.</param>
+        /// <param name="error">The error.</param>
+        public AdoptersException(AdopterExceptionCode code, string error) : base(error)
+        {
+            this.Code = code;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AdoptersException"/> class.
+        /// </summary>
+        /// <param name="target">The target.</param>
+        /// <param name="code">The code.</param>
+        public AdoptersException(string target, AdopterExceptionCode code) : base(ExceptionMessages.GetMessage(code))
+        {
+            this.Target = target;
+            this.Code = code;
+        }
     }
 }

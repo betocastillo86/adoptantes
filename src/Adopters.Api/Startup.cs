@@ -59,6 +59,8 @@ namespace Adopters.Api
 
             app.InitDatabase(env);
 
+            app.AddJWTAuthorization(env, loggerFactory);
+
             app.UseMvc();
         }
 

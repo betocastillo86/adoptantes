@@ -27,6 +27,11 @@ namespace Adopters.Data.Migrations.Seeding
             list.Add(new SystemSetting() { Name = "GeneralSettings.BigPictureHeight", Value = "800" });
             list.Add(new SystemSetting() { Name = "GeneralSettings.SmallPictureWidth", Value = "500" });
             list.Add(new SystemSetting() { Name = "GeneralSettings.SmallPictureHeight", Value = "500" });
+            list.Add(new SystemSetting() { Name = "SecuritySettings.AuthenticationAudience", Value = "theaudienceofadopters" });
+            list.Add(new SystemSetting() { Name = "SecuritySettings.AuthenticationIssuer", Value = "adoptantes.com" });
+            list.Add(new SystemSetting() { Name = "SecuritySettings.AuthenticationSecretKey", Value = "thesecretkeyofjwt" });
+            list.Add(new SystemSetting() { Name = "SecuritySettings.ExpirationTokenMinutes", Value = "14000" });
+            list.Add(new SystemSetting() { Name = "SecuritySettings.MaxRequestFileUploadMB", Value = "3" });
 
             foreach (var item in list)
             {

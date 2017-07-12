@@ -5,6 +5,7 @@
 //-----------------------------------------------------------------------
 namespace Adopters.Api.Infraestructure.Start
 {
+    using Adopters.Api.Infraestructure.Security;
     using Adopters.Business.Configuration;
     using Adopters.Business.Exceptions;
     using Adopters.Business.Services;
@@ -14,10 +15,12 @@ namespace Adopters.Api.Infraestructure.Start
     using Beto.Core.Data;
     using Beto.Core.Data.Configuration;
     using Beto.Core.Data.Files;
+    using Beto.Core.Data.Users;
     using Beto.Core.EventPublisher;
     using Beto.Core.Exceptions;
     using Beto.Core.Helpers;
     using Beto.Core.Registers;
+    using Beto.Core.Web.Security;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
@@ -49,7 +52,15 @@ namespace Adopters.Api.Infraestructure.Start
                 .As<IGeneralSettings>()
                 .SingleInstance();
 
+            builder.RegisterType<SecuritySettings>()
+                .As<ISecuritySettings>()
+                .SingleInstance();
+
             //// Adopters Services
+
+            builder.RegisterType<UserService>()
+                .As<IUserService>()
+                .SingleInstance();
 
             builder.RegisterType<ReportService>()
                 .As<IReportService>()
@@ -57,6 +68,10 @@ namespace Adopters.Api.Infraestructure.Start
 
             builder.RegisterType<LogService>()
                 .As<ILogService>()
+                .InstancePerLifetimeScope();
+
+            builder.RegisterType<ExternalAuthenticationService>()
+                .As<IExternalAuthenticationService>()
                 .InstancePerLifetimeScope();
 
             //// Core services
@@ -77,6 +92,10 @@ namespace Adopters.Api.Infraestructure.Start
                 .As<ILoggerService>()
                 .InstancePerLifetimeScope();
 
+            builder.RegisterType<AuthenticationTokenGeneratorJWT>()
+                .As<IAuthenticationTokenGenerator>()
+                .InstancePerLifetimeScope();
+
             ////TODO:Pasar a Autofac
             builder.RegisterType<DefaultServiceFactory>()
                .As<IServiceFactory>()
@@ -92,6 +111,10 @@ namespace Adopters.Api.Infraestructure.Start
 
             builder.RegisterType<HttpContextHelper>()
                 .As<IHttpContextHelper>()
+                .InstancePerLifetimeScope();
+
+            builder.RegisterType<SocialAuthenticationService>()
+                .As<ISocialAuthenticationService>()
                 .InstancePerLifetimeScope();
 
             builder.RegisterType<CorePictureResizerService>()
