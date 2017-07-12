@@ -37,7 +37,7 @@ namespace Adopters.Data.Entities.Mapping
             entity.Property(e => e.TwitterProfile).HasColumnType("varchar(500)");
 
             entity.HasOne(d => d.File)
-                .WithMany(p => p.Reports)
+                .WithMany()
                 .HasForeignKey(d => d.FileId)
                 .HasConstraintName("FK_Reports_Files");
 

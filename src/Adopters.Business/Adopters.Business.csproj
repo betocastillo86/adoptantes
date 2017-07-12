@@ -5,7 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="ImageSharp" Version="1.0.0-alpha9-00171" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\ext\beto.core\src\Beto.Core.Data\Beto.Core.Data.csproj" />
     <ProjectReference Include="..\..\ext\beto.core\src\Beto.Core\Beto.Core.csproj" />
+    <ProjectReference Include="..\Adopters.Data\Adopters.Data.csproj" />
   </ItemGroup>
 
 </Project>

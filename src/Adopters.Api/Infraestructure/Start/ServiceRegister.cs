@@ -5,11 +5,19 @@
 //-----------------------------------------------------------------------
 namespace Adopters.Api.Infraestructure.Start
 {
+    using Adopters.Business.Configuration;
     using Adopters.Business.Exceptions;
+    using Adopters.Business.Services;
     using Adopters.Data.Core;
     using Autofac;
+    using Beto.Core.Caching;
     using Beto.Core.Data;
+    using Beto.Core.Data.Configuration;
+    using Beto.Core.Data.Files;
+    using Beto.Core.EventPublisher;
     using Beto.Core.Exceptions;
+    using Beto.Core.Helpers;
+    using Beto.Core.Registers;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
@@ -36,8 +44,29 @@ namespace Adopters.Api.Infraestructure.Start
         /// <param name="configuration">The configuration.</param>
         public static void RegisterAdoptersServices(this ContainerBuilder builder, IConfigurationRoot configuration)
         {
+            //// Settings
+            builder.RegisterType<GeneralSettings>()
+                .As<IGeneralSettings>()
+                .SingleInstance();
+
+            //// Adopters Services
+
+            builder.RegisterType<ReportService>()
+                .As<IReportService>()
+                .InstancePerLifetimeScope();
+
+            builder.RegisterType<LogService>()
+                .As<ILogService>()
+                .InstancePerLifetimeScope();
+
+            //// Core services
+
             builder.RegisterType<Business.Exceptions.MessageExceptionFinder>()
                 .As<IMessageExceptionFinder>()
+                .InstancePerLifetimeScope();
+
+            builder.RegisterType<FilesHelper>()
+                .As<IFilesHelper>()
                 .InstancePerLifetimeScope();
 
             builder.RegisterType<AdoptersContext>()
@@ -46,6 +75,31 @@ namespace Adopters.Api.Infraestructure.Start
 
             builder.RegisterType<LoggerService>()
                 .As<ILoggerService>()
+                .InstancePerLifetimeScope();
+
+            ////TODO:Pasar a Autofac
+            builder.RegisterType<DefaultServiceFactory>()
+               .As<IServiceFactory>()
+               .InstancePerLifetimeScope();
+
+            builder.RegisterType<MemoryCacheManager>()
+               .As<ICacheManager>()
+               .InstancePerLifetimeScope();
+
+            builder.RegisterType<Publisher>()
+               .As<IPublisher>()
+               .InstancePerLifetimeScope();
+
+            builder.RegisterType<HttpContextHelper>()
+                .As<IHttpContextHelper>()
+                .InstancePerLifetimeScope();
+
+            builder.RegisterType<CorePictureResizerService>()
+                .As<ICorePictureResizerService>()
+                .InstancePerLifetimeScope();
+
+            builder.RegisterType<CoreSettingService>()
+                .As<ICoreSettingService>()
                 .InstancePerLifetimeScope();
 
             builder.RegisterGeneric(typeof(EFRepository<>))

@@ -30,7 +30,11 @@ namespace Adopters.Data.Migrations.Seeding
         /// <param name="context">The context.</param>
         private static void Seed(AdoptersContext context)
         {
+            SeedSettings.Seed(context);
+            SeedLocations.Seed(context);
+            SeedFiles.Seed(context);
             SeedUsers.Seed(context);
+            SeedReports.Seed(context);
         }
     }
 }

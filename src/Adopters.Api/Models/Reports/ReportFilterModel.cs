@@ -57,6 +57,25 @@ namespace Adopters.Api.Models
         public bool? IsPositive { get; set; }
 
         /// <summary>
+        /// Gets or sets the order by enum.
+        /// </summary>
+        /// <value>
+        /// The order by enum.
+        /// </value>
+        public ReportOrderBy OrderByEnum
+        {
+            get
+            {
+                return !string.IsNullOrEmpty(this.OrderBy) ? (ReportOrderBy)Enum.Parse(typeof(ReportOrderBy), this.OrderBy, true) : ReportOrderBy.Recent;
+            }
+
+            set
+            {
+                this.OrderBy = value.ToString();
+            }
+        }
+
+        /// <summary>
         /// Gets or sets the location identifier. Searches by location.
         /// </summary>
         /// <value>

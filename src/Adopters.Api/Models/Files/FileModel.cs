@@ -1,25 +1,22 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="File.cs" company="Gabriel Castillo">
+// <copyright file="FileModel.cs" company="Gabriel Castillo">
 //     Company copyright tag.
 // </copyright>
 //-----------------------------------------------------------------------
-namespace Adopters.Data.Entities
+namespace Adopters.Api.Models
 {
-    using System.Collections.Generic;
-    using Beto.Core.Data.Entities;
-
     /// <summary>
-    /// File Entity
+    /// File Model
     /// </summary>
-    /// <seealso cref="Adopters.Data.Entities.BaseEntity" />
-    public partial class File : BaseEntity, IFileEntity
+    public class FileModel : BaseModel
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="File"/> class.
+        /// Gets or sets the display order.
         /// </summary>
-        public File()
-        {
-        }
+        /// <value>
+        /// The display order.
+        /// </value>
+        public int DisplayOrder { get; set; }
 
         /// <summary>
         /// Gets or sets the name of the file.
@@ -30,6 +27,14 @@ namespace Adopters.Data.Entities
         public string FileName { get; set; }
 
         /// <summary>
+        /// Gets or sets the type of the MIME.
+        /// </summary>
+        /// <value>
+        /// The type of the MIME.
+        /// </value>
+        public string MimeType { get; set; }
+
+        /// <summary>
         /// Gets or sets the name.
         /// </summary>
         /// <value>
@@ -38,11 +43,11 @@ namespace Adopters.Data.Entities
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets the type of the MIME.
+        /// Gets or sets the thumbnail.
         /// </summary>
         /// <value>
-        /// The type of the MIME.
+        /// The thumbnail.
         /// </value>
-        public string MimeType { get; set; }
+        public string Thumbnail { get; set; }
     }
 }

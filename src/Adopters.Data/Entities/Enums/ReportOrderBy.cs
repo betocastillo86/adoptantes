@@ -16,9 +16,14 @@ namespace Adopters.Data.Entities
         Name,
 
         /// <summary>
-        /// Sorts by creation date
+        /// Sorts by creation date ascending
         /// </summary>
-        CreationDate,
+        Old,
+
+        /// <summary>
+        /// Sorts by creation date descending
+        /// </summary>
+        Recent,
 
         /// <summary>
         /// Sort by more dislikes

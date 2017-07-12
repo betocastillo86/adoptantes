@@ -371,7 +371,7 @@ namespace Adopters.Data.Migrations
             modelBuilder.Entity("Adopters.Data.Entities.Report", b =>
                 {
                     b.HasOne("Adopters.Data.Entities.File", "File")
-                        .WithMany("Reports")
+                        .WithMany()
                         .HasForeignKey("FileId")
                         .HasConstraintName("FK_Reports_Files");
 
