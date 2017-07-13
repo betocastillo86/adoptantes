@@ -31,6 +31,11 @@ namespace Adopters.Business.Exceptions
         InvalidExternalAuthenticationProvider = 53,
 
         /// <summary>
+        /// When a user already liked a report
+        /// </summary>
+        UserAlreadyLikedReport = 54,
+
+        /// <summary>
         /// The invalid foreign key
         /// </summary>
         InvalidForeignKey = 100,

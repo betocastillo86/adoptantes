@@ -16,15 +16,6 @@ namespace Adopters.Business.Services
     public interface IReportService
     {
         /// <summary>
-        /// Gets the by identifier.
-        /// </summary>
-        /// <param name="id">The identifier.</param>
-        /// <param name="includeLocation">if set to <c>true</c> [include location].</param>
-        /// <param name="includeUser">if set to <c>true</c> [include user].</param>
-        /// <returns>the report</returns>
-        Task<Report> GetById(int id, bool includeLocation = false, bool includeUser = false);
-
-        /// <summary>
         /// Gets all reports depending of the filter
         /// </summary>
         /// <param name="keyword">The keyword.</param>
@@ -53,6 +44,15 @@ namespace Adopters.Business.Services
             int pageSize = int.MaxValue);
 
         /// <summary>
+        /// Gets the by identifier.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="includeLocation">if set to <c>true</c> [include location].</param>
+        /// <param name="includeUser">if set to <c>true</c> [include user].</param>
+        /// <returns>the report</returns>
+        Task<Report> GetById(int id, bool includeLocation = false, bool includeUser = false);
+
+        /// <summary>
         /// Gets the report by identifier or friendly name.
         /// </summary>
         /// <param name="id">The identifier.</param>
@@ -67,6 +67,15 @@ namespace Adopters.Business.Services
         /// <param name="report">The report.</param>
         /// <returns>the task</returns>
         Task Insert(Report report);
+
+        /// <summary>
+        /// Likes a report.
+        /// </summary>
+        /// <param name="id">The identifier of the report.</param>
+        /// <param name="userId">the user who gives a like</param>
+        /// <param name="positive">if set to <c>true</c> [like].</param>
+        /// <returns>the count of likes if [likes] is true, or the dislikes if [like] is false</returns>
+        Task<int> Like(int id, int userId, bool positive);
 
         /// <summary>
         /// Updates the specified report.

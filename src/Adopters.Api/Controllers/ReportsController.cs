@@ -15,6 +15,7 @@ namespace Adopters.Api.Controllers
     using Beto.Core.Data.Files;
     using Beto.Core.Exceptions;
     using Beto.Core.Web.Api.Controllers;
+    using Beto.Core.Web.Api.Filters;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
@@ -118,6 +119,7 @@ namespace Adopters.Api.Controllers
         /// <returns>the result</returns>
         [Authorize]
         [HttpPost]
+        [RequiredModel]
         public async Task<IActionResult> Post([FromBody] ReportModel model)
         {
             var report = new Report()
@@ -162,6 +164,7 @@ namespace Adopters.Api.Controllers
         [Authorize]
         [HttpPut]
         [Route("{id:int}")]
+        [RequiredModel]
         public async Task<IActionResult> Put(int id, [FromBody] ReportModel model)
         {
             var report = await this.reportService.GetById(id);

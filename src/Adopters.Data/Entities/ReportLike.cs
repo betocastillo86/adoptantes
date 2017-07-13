@@ -30,12 +30,12 @@ namespace Adopters.Data.Entities
         public int ReportId { get; set; }
 
         /// <summary>
-        /// Gets or sets the positive.
+        /// Gets or sets a value indicating whether this <see cref="ReportLike"/> is positive.
         /// </summary>
         /// <value>
-        /// The positive.
+        ///   <c>true</c> if positive; otherwise, <c>false</c>.
         /// </value>
-        public int Positive { get; set; }
+        public bool Positive { get; set; }
 
         /// <summary>
         /// Gets or sets the creation date.

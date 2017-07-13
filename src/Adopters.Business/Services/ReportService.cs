@@ -27,6 +27,11 @@ namespace Adopters.Business.Services
         private readonly IRepository<Report> reportRepository;
 
         /// <summary>
+        /// The report like repository
+        /// </summary>
+        private readonly IRepository<ReportLike> reportLikeRepository;
+
+        /// <summary>
         /// The publisher
         /// </summary>
         private readonly IPublisher publisher;
@@ -42,14 +47,17 @@ namespace Adopters.Business.Services
         /// <param name="reportRepository">The report repository.</param>
         /// <param name="publisher">The publisher.</param>
         /// <param name="seoHelper">The SEO helper.</param>
+        /// <param name="reportLikeRepository">The report like repository.</param>
         public ReportService(
             IRepository<Report> reportRepository,
             IPublisher publisher,
-            ISeoHelper seoHelper)
+            ISeoHelper seoHelper,
+            IRepository<ReportLike> reportLikeRepository)
         {
             this.reportRepository = reportRepository;
             this.publisher = publisher;
             this.seoHelper = seoHelper;
+            this.reportLikeRepository = reportLikeRepository;
         }
 
         /// <summary>
@@ -249,6 +257,56 @@ namespace Adopters.Business.Services
                 {
                     throw;
                 }
+            }
+        }
+
+        /// <summary>
+        /// Likes a report.
+        /// </summary>
+        /// <param name="id">The identifier of the report.</param>
+        /// <param name="userId">the user who gives a like</param>
+        /// <param name="positive">if set to <c>true</c> [like].</param>
+        /// <returns>
+        /// the count of likes if [likes] is true, or the dislikes if [like] is false
+        /// </returns>
+        public async Task<int> Like(int id, int userId, bool positive)
+        {
+            if (!this.reportLikeRepository.Table.Any(c => c.ReportId == id && c.UserId == userId))
+            {
+                var report = await this.reportRepository.Table.FirstOrDefaultAsync(c => c.Id == id);
+                if (report != null)
+                {
+                    await this.reportLikeRepository.InsertAsync(new ReportLike()
+                    {
+                        ReportId = id,
+                        UserId = userId,
+                        Positive = positive,
+                        CreationDate = DateTime.Now
+                    });
+
+                    var countLikes = this.reportLikeRepository.Table.Count(c => c.Positive == positive && c.ReportId == id);
+
+                    if (positive)
+                    {
+                        report.CountLikes = countLikes;
+                    }
+                    else
+                    {
+                        report.CountDislikes = countLikes;
+                    }
+
+                    await this.reportRepository.UpdateAsync(report);
+
+                    return countLikes;
+                }
+                else
+                {
+                    throw new AdoptersException(AdopterExceptionCode.RowNotFound);
+                }
+            }
+            else
+            {
+                throw new AdoptersException(AdopterExceptionCode.UserAlreadyLikedReport);
             }
         }
 

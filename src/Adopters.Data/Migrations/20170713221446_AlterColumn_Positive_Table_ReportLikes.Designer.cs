@@ -9,9 +9,10 @@ using Adopters.Data.Core;
 namespace Adopters.Data.Migrations
 {
     [DbContext(typeof(AdoptersContext))]
-    partial class AdoptersContextModelSnapshot : ModelSnapshot
+    [Migration("20170713221446_AlterColumn_Positive_Table_ReportLikes")]
+    partial class AlterColumn_Positive_Table_ReportLikes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.2")
