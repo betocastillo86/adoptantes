@@ -1,5 +1,5 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="BaseReportModel.cs" company="Gabriel Castillo">
+// <copyright file="ReportModel.cs" company="Gabriel Castillo">
 //     Company copyright tag.
 // </copyright>
 //-----------------------------------------------------------------------
@@ -11,7 +11,7 @@ namespace Adopters.Api.Models
     /// Base Report Model
     /// </summary>
     /// <seealso cref="Adopters.Api.Models.BaseModel" />
-    public class BaseReportModel : BaseModel
+    public class ReportModel : BaseModel
     {
         /// <summary>
         /// Gets or sets the name.
@@ -36,6 +36,14 @@ namespace Adopters.Api.Models
         /// The description.
         /// </value>
         public string Description { get; set; }
+
+        /// <summary>
+        /// Gets or sets the name of the friendly.
+        /// </summary>
+        /// <value>
+        /// The name of the friendly.
+        /// </value>
+        public string FriendlyName { get; set; }
 
         /// <summary>
         /// Gets or sets the file identifier.

@@ -24,14 +24,14 @@ namespace Adopters.Api.Models
         /// <param name="width">The width.</param>
         /// <param name="height">The height.</param>
         /// <returns>the model</returns>
-        public static BaseReportModel ToBaseModel(
+        public static ReportModel ToModel(
             this Report entity,
             IFilesHelper filesHelper = null,
             Func<string, string> contentUrlFunction = null,
             int width = 0,
             int height = 0)
         {
-            return new BaseReportModel()
+            return new ReportModel()
             {
                 Id = entity.Id,
                 CountComments = entity.CountComments,
@@ -39,6 +39,7 @@ namespace Adopters.Api.Models
                 CountLikes = entity.CountLikes,
                 CreationDate = entity.CreationDate,
                 Description = entity.Description,
+                FriendlyName = entity.FriendlyName,
                 Email = entity.Email,
                 FacebookProfile = entity.FacebookProfile,
                 Image = entity.FileId.HasValue ? entity.File.ToModel(filesHelper, contentUrlFunction, width, height) : null,
@@ -59,18 +60,18 @@ namespace Adopters.Api.Models
         /// <param name="width">The width.</param>
         /// <param name="height">The height.</param>
         /// <returns>the models</returns>
-        public static IList<BaseReportModel> ToModels(
+        public static IList<ReportModel> ToModels(
             this ICollection<Report> entities,
             IFilesHelper filesHelper = null,
             Func<string, string> contentUrlFunction = null,
             int width = 0,
             int height = 0)
         {
-            var models = new List<BaseReportModel>();
+            var models = new List<ReportModel>();
 
             foreach (var entity in entities)
             {
-                models.Add(entity.ToBaseModel(filesHelper, contentUrlFunction, width, height));
+                models.Add(entity.ToModel(filesHelper, contentUrlFunction, width, height));
             }
 
             return models;

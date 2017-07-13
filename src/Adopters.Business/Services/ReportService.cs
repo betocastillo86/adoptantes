@@ -156,6 +156,71 @@ namespace Adopters.Business.Services
         }
 
         /// <summary>
+        /// Gets the by identifier.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="includeLocation">if set to <c>true</c> [include location].</param>
+        /// <param name="includeUser">if set to <c>true</c> [include user].</param>
+        /// <returns>
+        /// the report
+        /// </returns>
+        public async Task<Report> GetById(int id, bool includeLocation = false, bool includeUser = false)
+        {
+            var query = this.reportRepository.Table
+                .Include(c => c.File)
+                .AsQueryable();
+
+            if (includeLocation)
+            {
+                query = query.Include(c => c.Location);
+            }
+
+            if (includeUser)
+            {
+                query = query.Include(c => c.User);
+            }
+
+            return await query.FirstOrDefaultAsync(c => c.Id == id && !c.Deleted);
+        }
+
+        /// <summary>
+        /// Gets the report by identifier or friendly name.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="includeLocation">if set to <c>true</c> [include location].</param>
+        /// <param name="includeUser">if set to <c>true</c> [include user].</param>
+        /// <returns>
+        /// the report
+        /// </returns>
+        public async Task<Report> GetByIdOrFriendlyName(string id, bool includeLocation = false, bool includeUser = false)
+        {
+            int idInt = 0;
+
+            if (int.TryParse(id, out idInt))
+            {
+                return await this.GetById(idInt, includeLocation, includeUser);
+            }
+            else
+            {
+                var query = this.reportRepository.Table
+                    .Include(c => c.File)
+                    .AsQueryable();
+
+                if (includeLocation)
+                {
+                    query = query.Include(c => c.Location);
+                }
+
+                if (includeUser)
+                {
+                    query = query.Include(c => c.User);
+                }
+
+                return await query.FirstOrDefaultAsync(c => c.FriendlyName.Equals(id) && !c.Deleted);
+            }
+        }
+
+        /// <summary>
         /// Inserts the specified report.
         /// </summary>
         /// <param name="report">The report.</param>

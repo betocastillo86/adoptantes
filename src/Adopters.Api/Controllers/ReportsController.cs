@@ -31,14 +31,14 @@ namespace Adopters.Api.Controllers
         private readonly IFilesHelper filesHelper;
 
         /// <summary>
-        /// The report service
-        /// </summary>
-        private readonly IReportService reportService;
-
-        /// <summary>
         /// The general settings
         /// </summary>
         private readonly IGeneralSettings generalSettings;
+
+        /// <summary>
+        /// The report service
+        /// </summary>
+        private readonly IReportService reportService;
 
         /// <summary>
         /// The work context
@@ -98,8 +98,17 @@ namespace Adopters.Api.Controllers
         [Route("{id}", Name = "Get_Report_Id")]
         public async Task<IActionResult> Get(string id)
         {
-            await Task.FromResult(0);
-            return null;
+            var report = await this.reportService.GetByIdOrFriendlyName(id, true, true);
+
+            if (report != null)
+            {
+                var model = report.ToModel(this.filesHelper, Url.Content, this.generalSettings.BigPictureWidth, this.generalSettings.BigPictureHeight);
+                return this.Ok(model);
+            }
+            else
+            {
+                return this.NotFound();
+            }
         }
 
         /// <summary>
@@ -109,7 +118,7 @@ namespace Adopters.Api.Controllers
         /// <returns>the result</returns>
         [Authorize]
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] BaseReportModel model)
+        public async Task<IActionResult> Post([FromBody] ReportModel model)
         {
             var report = new Report()
             {
@@ -141,6 +150,61 @@ namespace Adopters.Api.Controllers
                 {
                     throw e;
                 }
+            }
+        }
+
+        /// <summary>
+        /// Puts the specified identifier.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="model">The model.</param>
+        /// <returns>the action result</returns>
+        [Authorize]
+        [HttpPut]
+        [Route("{id:int}")]
+        public async Task<IActionResult> Put(int id, [FromBody] ReportModel model)
+        {
+            var report = await this.reportService.GetById(id);
+
+            if (report != null)
+            {
+                if (this.workContext.CurrentUser.IsAdmin() || report.UserId == this.workContext.CurrentUserId)
+                {
+                    report.Name = model.Name;
+                    report.Description = model.Description;
+                    report.Email = model.Email;
+                    report.FileId = model.Image?.Id;
+                    report.LocationId = model.Location?.Id;
+                    report.Positive = model.Positive;
+                    report.TwitterProfile = model.TwitterProfile;
+                    report.FacebookProfile = model.FacebookProfile;
+
+                    try
+                    {
+                        await this.reportService.Update(report);
+
+                        return this.Ok();
+                    }
+                    catch (AdoptersException e)
+                    {
+                        if (e.Code == AdopterExceptionCode.UserEmailAlreadyUsed)
+                        {
+                            return this.BadRequest(e.Code, "Email");
+                        }
+                        else
+                        {
+                            throw e;
+                        }
+                    }
+                }
+                else
+                {
+                    return this.Forbid();
+                }
+            }
+            else
+            {
+                return this.NotFound();
             }
         }
     }

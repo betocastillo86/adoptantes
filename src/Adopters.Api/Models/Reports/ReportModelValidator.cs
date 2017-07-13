@@ -1,5 +1,5 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="BaseReportModelValidator.cs" company="Gabriel Castillo">
+// <copyright file="ReportModelValidator.cs" company="Gabriel Castillo">
 //     Company copyright tag.
 // </copyright>
 //-----------------------------------------------------------------------
@@ -10,13 +10,13 @@ namespace Adopters.Api.Models
     /// <summary>
     /// Base report model rules of validation
     /// </summary>
-    /// <seealso cref="FluentValidation.AbstractValidator{Adopters.Api.Models.BaseReportModel}" />
-    public class BaseReportModelValidator : AbstractValidator<BaseReportModel>
+    /// <seealso cref="FluentValidation.AbstractValidator{Adopters.Api.Models.ReportModel}" />
+    public class ReportModelValidator : AbstractValidator<ReportModel>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="BaseReportModelValidator"/> class.
+        /// Initializes a new instance of the <see cref="ReportModelValidator"/> class.
         /// </summary>
-        public BaseReportModelValidator()
+        public ReportModelValidator()
         {
             this.RuleFor(c => c.Name)
                 .NotEmpty()

@@ -16,6 +16,15 @@ namespace Adopters.Business.Services
     public interface IReportService
     {
         /// <summary>
+        /// Gets the by identifier.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="includeLocation">if set to <c>true</c> [include location].</param>
+        /// <param name="includeUser">if set to <c>true</c> [include user].</param>
+        /// <returns>the report</returns>
+        Task<Report> GetById(int id, bool includeLocation = false, bool includeUser = false);
+
+        /// <summary>
         /// Gets all reports depending of the filter
         /// </summary>
         /// <param name="keyword">The keyword.</param>
@@ -42,6 +51,15 @@ namespace Adopters.Business.Services
             ReportOrderBy orderBy = ReportOrderBy.Recent,
             int page = 0,
             int pageSize = int.MaxValue);
+
+        /// <summary>
+        /// Gets the report by identifier or friendly name.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="includeLocation">if set to <c>true</c> [include location].</param>
+        /// <param name="includeUser">if set to <c>true</c> [include user].</param>
+        /// <returns>the report</returns>
+        Task<Report> GetByIdOrFriendlyName(string id, bool includeLocation = false, bool includeUser = false);
 
         /// <summary>
         /// Inserts the specified report.
