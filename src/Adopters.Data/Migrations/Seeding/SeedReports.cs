@@ -28,8 +28,8 @@ namespace Adopters.Data.Migrations.Seeding
 
             var list = new List<Report>();
 
-            list.Add(new Report() { Name = "Reporte de prueba 1", Description = "Reporte de prueba 1", Email = "reporte@prueba.com", UserId = user.Id, LocationId = location.Id, CountComments = 1, CountDislikes = 2, CountLikes = 3, CreationDate = DateTime.Now, Deleted = true, FacebookProfile = "facebook", Positive = true, TwitterProfile = "twitter", FileId = file.Id });
-            list.Add(new Report() { Name = "Reporte de prueba 2", Description = "Reporte de prueba 2", Email = "reporte@prueba.com", UserId = user.Id, LocationId = location.Id, CountComments = 1, CountDislikes = 2, CountLikes = 3, CreationDate = DateTime.Now, Deleted = true, FacebookProfile = "facebook", Positive = true, TwitterProfile = "twitter", FileId = file.Id });
+            list.Add(new Report() { Name = "Reporte de prueba 1", Description = "Reporte de prueba 1", FriendlyName = "reporte-prueba1", Email = "reporte@prueba.com", UserId = user.Id, LocationId = location.Id, CountComments = 1, CountDislikes = 2, CountLikes = 3, CreationDate = DateTime.Now, Deleted = true, FacebookProfile = "facebook", Positive = true, TwitterProfile = "twitter", FileId = file.Id });
+            list.Add(new Report() { Name = "Reporte de prueba 2", Description = "Reporte de prueba 2", FriendlyName = "reporte-prueba2", Email = "reporte2@prueba.com", UserId = user.Id, LocationId = location.Id, CountComments = 1, CountDislikes = 2, CountLikes = 3, CreationDate = DateTime.Now, Deleted = true, FacebookProfile = "facebook", Positive = true, TwitterProfile = "twitter", FileId = file.Id });
 
             foreach (var item in list)
             {

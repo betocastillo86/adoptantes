@@ -5,6 +5,7 @@
 //-----------------------------------------------------------------------
 namespace Adopters.Business.Exceptions
 {
+    using System;
     using Beto.Core.Exceptions;
 
     /// <summary>
@@ -24,7 +25,27 @@ namespace Adopters.Business.Exceptions
             ////TODO:Implementar
             if (exceptionCode is AdopterExceptionCode)
             {
-                return string.Empty;
+                var enumerator = Enum.Parse(typeof(AdopterExceptionCode), exceptionCode.ToString());
+
+                switch (enumerator)
+                {
+                    case AdopterExceptionCode.BadArgument:
+                        return "Argument mal enviado";
+                    case AdopterExceptionCode.ErrorTryingExternalLogin:
+                        return "Error autenticando con external login";
+                    case AdopterExceptionCode.UserEmailAlreadyUsed:
+                        return "El correo ya está siendo usado";
+                    case AdopterExceptionCode.InvalidExternalAuthenticationProvider:
+                        return "El proveedor de autenticación no es valido";
+                    case AdopterExceptionCode.InvalidForeignKey:
+                        return "Llave mal relacionada";
+                    case AdopterExceptionCode.InvalidIndex:
+                        return "Indice invalido";
+                    case AdopterExceptionCode.RowNotFound:
+                        return "Fila no encontrada";
+                    default:
+                        return string.Empty;
+                }
             }
             else
             {

@@ -42,5 +42,19 @@ namespace Adopters.Business.Services
             ReportOrderBy orderBy = ReportOrderBy.Recent,
             int page = 0,
             int pageSize = int.MaxValue);
+
+        /// <summary>
+        /// Inserts the specified report.
+        /// </summary>
+        /// <param name="report">The report.</param>
+        /// <returns>the task</returns>
+        Task Insert(Report report);
+
+        /// <summary>
+        /// Updates the specified report.
+        /// </summary>
+        /// <param name="report">The report.</param>
+        /// <returns>the task</returns>
+        Task Update(Report report);
     }
 }

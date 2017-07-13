@@ -226,6 +226,10 @@ namespace Adopters.Data.Migrations
 
                     b.Property<int?>("FileId");
 
+                    b.Property<string>("FriendlyName")
+                        .IsRequired()
+                        .HasColumnType("varchar(250)");
+
                     b.Property<int?>("LocationId");
 
                     b.Property<string>("Name")
@@ -241,7 +245,15 @@ namespace Adopters.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Email")
+                        .IsUnique()
+                        .HasName("IX_Report_Email");
+
                     b.HasIndex("FileId");
+
+                    b.HasIndex("FriendlyName")
+                        .IsUnique()
+                        .HasName("IX_Report_FriendlyName");
 
                     b.HasIndex("LocationId");
 
@@ -308,7 +320,7 @@ namespace Adopters.Data.Migrations
                         .IsRequired()
                         .HasColumnType("varchar(150)");
 
-                    b.Property<int>("FacebookId")
+                    b.Property<string>("FacebookId")
                         .IsRequired()
                         .HasColumnType("varchar(50)");
 
@@ -326,6 +338,7 @@ namespace Adopters.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("Email")
+                        .IsUnique()
                         .HasName("IX_Users");
 
                     b.HasIndex("LocationId");

@@ -22,9 +22,10 @@ namespace Adopters.Data.Entities.Mapping
             entity.ToTable("Users");
 
             entity.HasIndex(e => e.Email)
+                    .IsUnique()
                     .HasName("IX_Users");
 
-            entity.Property(e => e.Id);
+            entity.HasKey(e => e.Id);
 
             entity.Property(e => e.Name)
                 .IsRequired()

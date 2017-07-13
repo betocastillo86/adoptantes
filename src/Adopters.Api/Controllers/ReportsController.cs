@@ -8,10 +8,14 @@ namespace Adopters.Api.Controllers
     using System.Threading.Tasks;
     using Adopters.Api.Models;
     using Adopters.Business.Configuration;
+    using Adopters.Business.Exceptions;
+    using Adopters.Business.Security;
     using Adopters.Business.Services;
+    using Adopters.Data.Entities;
     using Beto.Core.Data.Files;
     using Beto.Core.Exceptions;
     using Beto.Core.Web.Api.Controllers;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
     /// <summary>
@@ -37,21 +41,29 @@ namespace Adopters.Api.Controllers
         private readonly IGeneralSettings generalSettings;
 
         /// <summary>
+        /// The work context
+        /// </summary>
+        private readonly IWorkContext workContext;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="ReportsController"/> class.
         /// </summary>
         /// <param name="messageExceptionFinder">The message exception finder.</param>
         /// <param name="reportService">The report service.</param>
         /// <param name="filesHelper">The files helper.</param>
         /// <param name="generalSettings">The general settings.</param>
+        /// <param name="workContext">The work context.</param>
         public ReportsController(
             IMessageExceptionFinder messageExceptionFinder,
             IReportService reportService,
             IFilesHelper filesHelper,
-            IGeneralSettings generalSettings) : base(messageExceptionFinder)
+            IGeneralSettings generalSettings,
+            IWorkContext workContext) : base(messageExceptionFinder)
         {
             this.reportService = reportService;
             this.filesHelper = filesHelper;
             this.generalSettings = generalSettings;
+            this.workContext = workContext;
         }
 
         /// <summary>
@@ -75,6 +87,61 @@ namespace Adopters.Api.Controllers
             var models = reports.ToModels(this.filesHelper, Url.Content, this.generalSettings.SmallPictureWidth, this.generalSettings.SmallPictureHeight);
 
             return this.Ok(models, reports.HasNextPage, reports.TotalCount);
+        }
+
+        /// <summary>
+        /// Gets the specified report by identifier or friendlyName
+        /// </summary>
+        /// <param name="id">The identifier or friendlyName.</param>
+        /// <returns>the action</returns>
+        [HttpGet]
+        [Route("{id}", Name = "Get_Report_Id")]
+        public async Task<IActionResult> Get(string id)
+        {
+            await Task.FromResult(0);
+            return null;
+        }
+
+        /// <summary>
+        /// Posts the specified model.
+        /// </summary>
+        /// <param name="model">The model.</param>
+        /// <returns>the result</returns>
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> Post([FromBody] BaseReportModel model)
+        {
+            var report = new Report()
+            {
+                Description = model.Description,
+                Email = model.Email,
+                FacebookProfile = model.FacebookProfile,
+                FileId = model.Image?.Id,
+                LocationId = model.Location?.Id,
+                Name = model.Name,
+                Positive = model.Positive,
+                TwitterProfile = model.TwitterProfile,
+                UserId = this.workContext.CurrentUserId
+            };
+
+            try
+            {
+                await this.reportService.Insert(report);
+
+                var createdUri = this.Url.Link("Get_Report_Id", new BaseModel() { Id = report.Id });
+                return this.Created(createdUri, new BaseModel { Id = report.Id });
+            }
+            catch (AdoptersException e)
+            {
+                if (e.Code == AdopterExceptionCode.UserEmailAlreadyUsed)
+                {
+                    return this.BadRequest(e.Code, "Email");
+                }
+                else
+                {
+                    throw e;
+                }
+            }
         }
     }
 }

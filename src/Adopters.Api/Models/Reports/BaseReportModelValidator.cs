@@ -24,7 +24,6 @@ namespace Adopters.Api.Models
                 .MinimumLength(10);
 
             this.RuleFor(c => c.Email)
-                .Empty()
                 .EmailAddress();
 
             this.RuleFor(c => c.Description)
@@ -33,12 +32,10 @@ namespace Adopters.Api.Models
                 .MaximumLength(1500);
 
             this.RuleFor(c => c.FacebookProfile)
-                .Empty()
-                .Matches(@"#\b(([\w-]+://?|www[.])[^\s()<>]+(?:\([\w\d]+\)|([^[:punct:]\s]|/)))#iS");
+                .Matches(@"https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)");
 
             this.RuleFor(c => c.TwitterProfile)
-                .Empty()
-                .Matches(@"#\b(([\w-]+://?|www[.])[^\s()<>]+(?:\([\w\d]+\)|([^[:punct:]\s]|/)))#iS");
+                .Matches(@"https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)");
         }
     }
 }

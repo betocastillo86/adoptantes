@@ -7,12 +7,13 @@ namespace Adopters.Data.Entities
 {
     using System;
     using System.Collections.Generic;
+    using Beto.Core.Data.Common;
 
     /// <summary>
     /// Report Entity
     /// </summary>
     /// <seealso cref="Adopters.Data.Entities.BaseEntity" />
-    public partial class Report : BaseEntity
+    public partial class Report : BaseEntity, ISeoEntity
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Report"/> class.
@@ -44,6 +45,14 @@ namespace Adopters.Data.Entities
         /// The description.
         /// </value>
         public string Description { get; set; }
+
+        /// <summary>
+        /// Gets or sets the name of the friendly.
+        /// </summary>
+        /// <value>
+        /// The name of the friendly.
+        /// </value>
+        public string FriendlyName { get; set; }
 
         /// <summary>
         /// Gets or sets the file identifier.

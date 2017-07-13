@@ -8,8 +8,11 @@ namespace Adopters.Business.Services
     using System;
     using System.Linq;
     using System.Threading.Tasks;
+    using Adopters.Business.Exceptions;
     using Adopters.Data.Entities;
     using Beto.Core.Data;
+    using Beto.Core.Data.Common;
+    using Beto.Core.EventPublisher;
     using Microsoft.EntityFrameworkCore;
 
     /// <summary>
@@ -24,12 +27,29 @@ namespace Adopters.Business.Services
         private readonly IRepository<Report> reportRepository;
 
         /// <summary>
+        /// The publisher
+        /// </summary>
+        private readonly IPublisher publisher;
+
+        /// <summary>
+        /// The SEO helper
+        /// </summary>
+        private readonly ISeoHelper seoHelper;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="ReportService"/> class.
         /// </summary>
         /// <param name="reportRepository">The report repository.</param>
-        public ReportService(IRepository<Report> reportRepository)
+        /// <param name="publisher">The publisher.</param>
+        /// <param name="seoHelper">The SEO helper.</param>
+        public ReportService(
+            IRepository<Report> reportRepository,
+            IPublisher publisher,
+            ISeoHelper seoHelper)
         {
             this.reportRepository = reportRepository;
+            this.publisher = publisher;
+            this.seoHelper = seoHelper;
         }
 
         /// <summary>
@@ -133,6 +153,52 @@ namespace Adopters.Business.Services
             }
 
             return await new PagedList<Report>().Async(query, page, pageSize);
+        }
+
+        /// <summary>
+        /// Inserts the specified report.
+        /// </summary>
+        /// <param name="report">The report.</param>
+        /// <returns>
+        /// the task
+        /// </returns>
+        public async Task Insert(Report report)
+        {
+            report.CreationDate = DateTime.Now;
+
+            report.FriendlyName = this.seoHelper.GenerateFriendlyName($"{report.Name} {(report.Positive ? "buen" : "mal")} adoptante", this.reportRepository.Table);
+
+            try
+            {
+                await this.reportRepository.InsertAsync(report);
+
+                await this.publisher.EntityInserted(report);
+            }
+            catch (DbUpdateException e)
+            {
+                if (e.ToString().Contains("'IX_Report_Email'"))
+                {
+                    throw new AdoptersException(AdopterExceptionCode.UserEmailAlreadyUsed);
+                }
+                else
+                {
+                    throw;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Updates the specified report.
+        /// </summary>
+        /// <param name="report">The report.</param>
+        /// <returns>
+        /// the task
+        /// </returns>
+        public async Task Update(Report report)
+        {
+            await this.reportRepository.UpdateAsync(report);
+
+            await this.publisher.EntityUpdated(report);
         }
     }
 }

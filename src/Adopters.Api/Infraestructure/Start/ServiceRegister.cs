@@ -8,11 +8,13 @@ namespace Adopters.Api.Infraestructure.Start
     using Adopters.Api.Infraestructure.Security;
     using Adopters.Business.Configuration;
     using Adopters.Business.Exceptions;
+    using Adopters.Business.Security;
     using Adopters.Business.Services;
     using Adopters.Data.Core;
     using Autofac;
     using Beto.Core.Caching;
     using Beto.Core.Data;
+    using Beto.Core.Data.Common;
     using Beto.Core.Data.Configuration;
     using Beto.Core.Data.Files;
     using Beto.Core.Data.Users;
@@ -74,6 +76,10 @@ namespace Adopters.Api.Infraestructure.Start
                 .As<IExternalAuthenticationService>()
                 .InstancePerLifetimeScope();
 
+            builder.RegisterType<WorkContext>()
+                .As<IWorkContext>()
+                .InstancePerLifetimeScope();
+
             //// Core services
 
             builder.RegisterType<Business.Exceptions.MessageExceptionFinder>()
@@ -107,6 +113,10 @@ namespace Adopters.Api.Infraestructure.Start
 
             builder.RegisterType<Publisher>()
                .As<IPublisher>()
+               .InstancePerLifetimeScope();
+
+            builder.RegisterType<SeoHelper>()
+               .As<ISeoHelper>()
                .InstancePerLifetimeScope();
 
             builder.RegisterType<HttpContextHelper>()

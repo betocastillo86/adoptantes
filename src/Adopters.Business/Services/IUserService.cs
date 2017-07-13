@@ -14,6 +14,20 @@ namespace Adopters.Business.Services
     public interface IUserService
     {
         /// <summary>
+        /// Gets the user by identifier.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns>the user</returns>
+        User GetById(int id);
+
+        /// <summary>
+        /// Gets the by identifier.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns>The user</returns>
+        Task<User> GetByIdAsync(int id);
+
+        /// <summary>
         /// Inserts the specified user.
         /// </summary>
         /// <param name="user">The user.</param>

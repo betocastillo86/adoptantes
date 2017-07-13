@@ -6,6 +6,7 @@
 namespace Adopters.Business.Services
 {
     using System;
+    using System.Linq;
     using System.Threading.Tasks;
     using Adopters.Business.Exceptions;
     using Adopters.Data.Entities;
@@ -21,9 +22,9 @@ namespace Adopters.Business.Services
     public class UserService : IUserService
     {
         /// <summary>
-        /// The user repository
+        /// The HTTP context helper
         /// </summary>
-        private readonly IRepository<User> userRepository;
+        private readonly IHttpContextHelper httpContextHelper;
 
         /// <summary>
         /// The publisher
@@ -31,9 +32,9 @@ namespace Adopters.Business.Services
         private readonly IPublisher publisher;
 
         /// <summary>
-        /// The HTTP context helper
+        /// The user repository
         /// </summary>
-        private readonly IHttpContextHelper httpContextHelper;
+        private readonly IRepository<User> userRepository;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="UserService"/> class.
@@ -49,6 +50,32 @@ namespace Adopters.Business.Services
             this.userRepository = userRepository;
             this.publisher = publisher;
             this.httpContextHelper = httpContextHelper;
+        }
+
+        /// <summary>
+        /// Gets the user by identifier.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns>the user</returns>
+        public User GetById(int id)
+        {
+            return this.userRepository.Table
+                .Include(c => c.Location)
+                .FirstOrDefault(c => c.Id == id && !c.Deleted);
+        }
+
+        /// <summary>
+        /// Gets the by identifier.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns>
+        /// The user
+        /// </returns>
+        public async Task<User> GetByIdAsync(int id)
+        {
+            return await this.userRepository.Table
+                .Include(c => c.Location)
+                .FirstOrDefaultAsync(c => c.Id == id && !c.Deleted);
         }
 
         /// <summary>

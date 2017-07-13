@@ -22,9 +22,21 @@ namespace Adopters.Data.Entities.Mapping
         {
             entity.ToTable("Reports");
 
+            entity.HasIndex(e => e.Email)
+                    .IsUnique()
+                    .HasName("IX_Report_Email");
+
+            entity.HasIndex(e => e.FriendlyName)
+                    .IsUnique()
+                    .HasName("IX_Report_FriendlyName");
+
             entity.Property(e => e.CreationDate).HasColumnType("datetime");
 
             entity.Property(e => e.Description).IsRequired();
+
+            entity.Property(e => e.FriendlyName)
+                .IsRequired()
+                .HasColumnType("varchar(250)");
 
             entity.Property(e => e.Email).HasColumnType("varchar(150)");
 
