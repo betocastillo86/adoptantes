@@ -68,6 +68,14 @@ namespace Adopters.Api.Infraestructure.Start
                 .As<IReportService>()
                 .InstancePerLifetimeScope();
 
+            builder.RegisterType<FileService>()
+                .As<IFileService>()
+                .InstancePerLifetimeScope();
+
+            builder.RegisterType<PictureService>()
+                .As<IPictureService>()
+                .InstancePerLifetimeScope();
+
             builder.RegisterType<LogService>()
                 .As<ILogService>()
                 .InstancePerLifetimeScope();

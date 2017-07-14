@@ -27,6 +27,11 @@ namespace Adopters.Api.Controllers
     public class ReportsController : BaseApiController
     {
         /// <summary>
+        /// The file service
+        /// </summary>
+        private readonly IFileService fileService;
+
+        /// <summary>
         /// The files helper
         /// </summary>
         private readonly IFilesHelper filesHelper;
@@ -35,6 +40,11 @@ namespace Adopters.Api.Controllers
         /// The general settings
         /// </summary>
         private readonly IGeneralSettings generalSettings;
+
+        /// <summary>
+        /// The picture service
+        /// </summary>
+        private readonly IPictureService pictureService;
 
         /// <summary>
         /// The report service
@@ -54,17 +64,23 @@ namespace Adopters.Api.Controllers
         /// <param name="filesHelper">The files helper.</param>
         /// <param name="generalSettings">The general settings.</param>
         /// <param name="workContext">The work context.</param>
+        /// <param name="pictureService">The picture service.</param>
+        /// <param name="fileService">the file service</param>
         public ReportsController(
             IMessageExceptionFinder messageExceptionFinder,
             IReportService reportService,
             IFilesHelper filesHelper,
             IGeneralSettings generalSettings,
-            IWorkContext workContext) : base(messageExceptionFinder)
+            IWorkContext workContext,
+            IPictureService pictureService,
+            IFileService fileService) : base(messageExceptionFinder)
         {
             this.reportService = reportService;
             this.filesHelper = filesHelper;
             this.generalSettings = generalSettings;
             this.workContext = workContext;
+            this.pictureService = pictureService;
+            this.fileService = fileService;
         }
 
         /// <summary>
@@ -139,6 +155,13 @@ namespace Adopters.Api.Controllers
             {
                 await this.reportService.Insert(report);
 
+                if (report.FileId.HasValue)
+                {
+                    var file = await this.fileService.GetById(report.FileId.Value);
+                    this.pictureService.GetPicturePath(file, this.generalSettings.BigPictureWidth, this.generalSettings.BigPictureHeight, true);
+                    this.pictureService.GetPicturePath(file, this.generalSettings.SmallPictureWidth, this.generalSettings.SmallPictureHeight, true);
+                }
+
                 var createdUri = this.Url.Link("Get_Report_Id", new BaseModel() { Id = report.Id });
                 return this.Created(createdUri, new BaseModel { Id = report.Id });
             }
@@ -173,6 +196,8 @@ namespace Adopters.Api.Controllers
             {
                 if (this.workContext.CurrentUser.IsAdmin() || report.UserId == this.workContext.CurrentUserId)
                 {
+                    var fileChanged = report.FileId != model.Image?.Id;
+
                     report.Name = model.Name;
                     report.Description = model.Description;
                     report.Email = model.Email;
@@ -185,6 +210,13 @@ namespace Adopters.Api.Controllers
                     try
                     {
                         await this.reportService.Update(report);
+
+                        if (fileChanged && report.FileId.HasValue)
+                        {
+                            var file = await this.fileService.GetById(report.FileId.Value);
+                            this.pictureService.GetPicturePath(file, this.generalSettings.BigPictureWidth, this.generalSettings.BigPictureHeight, true);
+                            this.pictureService.GetPicturePath(file, this.generalSettings.SmallPictureWidth, this.generalSettings.SmallPictureHeight, true);
+                        }
 
                         return this.Ok();
                     }

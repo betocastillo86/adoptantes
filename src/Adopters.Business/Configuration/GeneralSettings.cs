@@ -59,5 +59,21 @@ namespace Adopters.Business.Configuration
         /// The height of the small picture.
         /// </value>
         public int SmallPictureHeight => this.settingService.Get<int>("GeneralSettings.SmallPictureHeight");
+
+        /// <summary>
+        /// Gets the default width of the picture.
+        /// </summary>
+        /// <value>
+        /// The default width of the picture.
+        /// </value>
+        public int DefaultPictureWidth => this.settingService.Get<int>("GeneralSettings.DefaultPictureWidth");
+
+        /// <summary>
+        /// Gets the default height of the picture.
+        /// </summary>
+        /// <value>
+        /// The default height of the picture.
+        /// </value>
+        public int DefaultPictureHeight => this.settingService.Get<int>("GeneralSettings.DefaultPictureHeight");
     }
 }

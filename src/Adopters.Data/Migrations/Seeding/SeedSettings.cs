@@ -32,6 +32,8 @@ namespace Adopters.Data.Migrations.Seeding
             list.Add(new SystemSetting() { Name = "SecuritySettings.AuthenticationSecretKey", Value = "thesecretkeyofjwt" });
             list.Add(new SystemSetting() { Name = "SecuritySettings.ExpirationTokenMinutes", Value = "14000" });
             list.Add(new SystemSetting() { Name = "SecuritySettings.MaxRequestFileUploadMB", Value = "3" });
+            list.Add(new SystemSetting() { Name = "GeneralSettings.DefaultPictureWidth", Value = "1500" });
+            list.Add(new SystemSetting() { Name = "GeneralSettings.DefaultPictureHeight", Value = "1500" });
 
             foreach (var item in list)
             {

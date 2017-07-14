@@ -11,6 +11,22 @@ namespace Adopters.Business.Configuration
     public interface IGeneralSettings
     {
         /// <summary>
+        /// Gets the default width of the picture.
+        /// </summary>
+        /// <value>
+        /// The default width of the picture.
+        /// </value>
+        int DefaultPictureWidth { get; }
+
+        /// <summary>
+        /// Gets the default height of the picture.
+        /// </summary>
+        /// <value>
+        /// The default height of the picture.
+        /// </value>
+        int DefaultPictureHeight { get; }
+
+        /// <summary>
         /// Gets the width of the big picture.
         /// </summary>
         /// <value>
