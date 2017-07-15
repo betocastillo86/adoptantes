@@ -5,6 +5,7 @@
 //-----------------------------------------------------------------------
 namespace Adopters.Api.Controllers
 {
+    using System.Linq;
     using System.Threading.Tasks;
     using Adopters.Api.Models;
     using Adopters.Business.Configuration;
@@ -12,6 +13,7 @@ namespace Adopters.Api.Controllers
     using Adopters.Business.Security;
     using Adopters.Business.Services;
     using Adopters.Data.Entities;
+    using Beto.Core.Data;
     using Beto.Core.Data.Files;
     using Beto.Core.Exceptions;
     using Beto.Core.Web.Api.Controllers;

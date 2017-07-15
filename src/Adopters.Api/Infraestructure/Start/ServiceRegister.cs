@@ -17,6 +17,7 @@ namespace Adopters.Api.Infraestructure.Start
     using Beto.Core.Data.Common;
     using Beto.Core.Data.Configuration;
     using Beto.Core.Data.Files;
+    using Beto.Core.Data.Notifications;
     using Beto.Core.Data.Users;
     using Beto.Core.EventPublisher;
     using Beto.Core.Exceptions;
@@ -106,6 +107,10 @@ namespace Adopters.Api.Infraestructure.Start
                 .As<ILoggerService>()
                 .InstancePerLifetimeScope();
 
+            builder.RegisterType<NotificationService>()
+                .As<INotificationService>()
+                .InstancePerLifetimeScope();
+
             builder.RegisterType<AuthenticationTokenGeneratorJWT>()
                 .As<IAuthenticationTokenGenerator>()
                 .InstancePerLifetimeScope();
@@ -117,6 +122,10 @@ namespace Adopters.Api.Infraestructure.Start
 
             builder.RegisterType<MemoryCacheManager>()
                .As<ICacheManager>()
+               .InstancePerLifetimeScope();
+
+            builder.RegisterType<CoreNotificationService>()
+               .As<ICoreNotificationService>()
                .InstancePerLifetimeScope();
 
             builder.RegisterType<Publisher>()

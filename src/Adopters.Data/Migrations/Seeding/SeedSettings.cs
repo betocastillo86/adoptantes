@@ -34,6 +34,8 @@ namespace Adopters.Data.Migrations.Seeding
             list.Add(new SystemSetting() { Name = "SecuritySettings.MaxRequestFileUploadMB", Value = "3" });
             list.Add(new SystemSetting() { Name = "GeneralSettings.DefaultPictureWidth", Value = "1500" });
             list.Add(new SystemSetting() { Name = "GeneralSettings.DefaultPictureHeight", Value = "1500" });
+            list.Add(new SystemSetting() { Name = "GeneralSettings.BodyBaseHtml", Value = "%%Body%%" });
+            list.Add(new SystemSetting() { Name = "GeneralSettings.SiteUrl", Value = "http://localhost:60122/" });
 
             foreach (var item in list)
             {

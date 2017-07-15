@@ -57,5 +57,21 @@ namespace Adopters.Business.Configuration
         /// The height of the small picture.
         /// </value>
         int SmallPictureHeight { get; }
+
+        /// <summary>
+        /// Gets the body base HTML.
+        /// </summary>
+        /// <value>
+        /// The body base HTML.
+        /// </value>
+        string BodyBaseHtml { get; }
+
+        /// <summary>
+        /// Gets the site URL.
+        /// </summary>
+        /// <value>
+        /// The site URL.
+        /// </value>
+        string SiteUrl { get; }
     }
 }

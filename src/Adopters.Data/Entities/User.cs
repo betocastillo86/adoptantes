@@ -8,12 +8,13 @@ namespace Adopters.Data.Entities
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations.Schema;
+    using Beto.Core.Data.Users;
 
     /// <summary>
     /// User Entity
     /// </summary>
     /// <seealso cref="Adopters.Data.Entities.BaseEntity" />
-    public partial class User : BaseEntity
+    public partial class User : BaseEntity, IUserEntity
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="User"/> class.

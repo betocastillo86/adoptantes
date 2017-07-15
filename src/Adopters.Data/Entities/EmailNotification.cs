@@ -6,12 +6,13 @@
 namespace Adopters.Data.Entities
 {
     using System;
+    using Beto.Core.Data.Notifications;
 
     /// <summary>
     /// Email Notification Entity
     /// </summary>
     /// <seealso cref="Adopters.Data.Entities.BaseEntity" />
-    public partial class EmailNotification : BaseEntity
+    public partial class EmailNotification : BaseEntity, IEmailNotificationEntity
     {
         /// <summary>
         /// Gets or sets the subject.

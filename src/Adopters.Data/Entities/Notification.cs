@@ -5,11 +5,13 @@
 //-----------------------------------------------------------------------
 namespace Adopters.Data.Entities
 {
+    using Beto.Core.Data.Notifications;
+
     /// <summary>
     /// Notification Entity
     /// </summary>
     /// <seealso cref="Adopters.Data.Entities.BaseEntity" />
-    public partial class Notification : BaseEntity
+    public partial class Notification : BaseEntity, INotificationEntity
     {
         /// <summary>
         /// Gets or sets the name.

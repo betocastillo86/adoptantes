@@ -75,5 +75,21 @@ namespace Adopters.Business.Configuration
         /// The default height of the picture.
         /// </value>
         public int DefaultPictureHeight => this.settingService.Get<int>("GeneralSettings.DefaultPictureHeight");
+
+        /// <summary>
+        /// Gets the body base HTML.
+        /// </summary>
+        /// <value>
+        /// The body base HTML.
+        /// </value>
+        public string BodyBaseHtml => this.settingService.Get<string>("GeneralSettings.BodyBaseHtml");
+
+        /// <summary>
+        /// Gets the site URL.
+        /// </summary>
+        /// <value>
+        /// The site URL.
+        /// </value>
+        public string SiteUrl => this.settingService.Get<string>("GeneralSettings.SiteUrl");
     }
 }

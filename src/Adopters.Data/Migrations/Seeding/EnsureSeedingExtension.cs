@@ -35,6 +35,7 @@ namespace Adopters.Data.Migrations.Seeding
             SeedFiles.Seed(context);
             SeedUsers.Seed(context);
             SeedReports.Seed(context);
+            SeedNotification.Seed(context);
         }
     }
 }
