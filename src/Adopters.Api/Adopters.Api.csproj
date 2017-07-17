@@ -32,5 +32,11 @@
     <ProjectReference Include="..\Adopters.Business\Adopters.Business.csproj" />
     <ProjectReference Include="..\Adopters.Data\Adopters.Data.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Models\Comments\CommentModelValidator.cs">
+      <ExcludeFromSourceAnalysis>False</ExcludeFromSourceAnalysis>
+      <ExcludeFromStyleCop>False</ExcludeFromStyleCop>
+    </Compile>
+  </ItemGroup>
 
 </Project>

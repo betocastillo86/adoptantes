@@ -10,6 +10,7 @@ namespace Adopters.Api.Controllers
     using Adopters.Api.Models;
     using Adopters.Business.Configuration;
     using Adopters.Business.Exceptions;
+    using Adopters.Business.Extensions;
     using Adopters.Business.Security;
     using Adopters.Business.Services;
     using Adopters.Data.Entities;

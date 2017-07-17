@@ -89,6 +89,10 @@ namespace Adopters.Api.Infraestructure.Start
                 .As<IWorkContext>()
                 .InstancePerLifetimeScope();
 
+            builder.RegisterType<CommentService>()
+                .As<ICommentService>()
+                .InstancePerLifetimeScope();
+
             //// Core services
 
             builder.RegisterType<Business.Exceptions.MessageExceptionFinder>()
