@@ -5,6 +5,8 @@
 //-----------------------------------------------------------------------
 namespace Adopters.Api.Infraestructure.Start
 {
+    using System;
+    using System.Reflection;
     using Adopters.Api.Infraestructure.Security;
     using Adopters.Business.Configuration;
     using Adopters.Business.Exceptions;
@@ -93,6 +95,10 @@ namespace Adopters.Api.Infraestructure.Start
                 .As<ICommentService>()
                 .InstancePerLifetimeScope();
 
+            builder.RegisterType<SeoService>()
+                .As<ISeoService>()
+                .InstancePerLifetimeScope();
+
             //// Core services
 
             builder.RegisterType<Business.Exceptions.MessageExceptionFinder>()
@@ -159,6 +165,17 @@ namespace Adopters.Api.Infraestructure.Start
             builder.RegisterGeneric(typeof(EFRepository<>))
                 .As(typeof(IRepository<>))
                 .InstancePerLifetimeScope();
+
+            foreach (var typeInterface in ReflectionHelper.GetTypesOnProject(typeof(ISubscriber<>), "adopters"))
+            {
+                builder.RegisterType(typeInterface).As(
+                    typeInterface.GetTypeInfo().FindInterfaces(
+                        (type, criteria) =>
+                        {
+                            return type.GetTypeInfo().IsGenericType && ((Type)criteria).GetTypeInfo().IsAssignableFrom(type.GetGenericTypeDefinition());
+                        },
+                typeof(ISubscriber<>))).InstancePerLifetimeScope();
+            }
         }
     }
 }

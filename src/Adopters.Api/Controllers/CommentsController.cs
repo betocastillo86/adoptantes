@@ -35,18 +35,26 @@ namespace Adopters.Api.Controllers
         private readonly IWorkContext workContext;
 
         /// <summary>
+        /// The report service
+        /// </summary>
+        private readonly IReportService reportService;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="CommentsController"/> class.
         /// </summary>
         /// <param name="messageExceptionFinder">The message exception finder.</param>
         /// <param name="commentService">The comment service.</param>
         /// <param name="workContext">The work context.</param>
+        /// <param name="reportService">The report service.</param>
         public CommentsController(
             IMessageExceptionFinder messageExceptionFinder,
             ICommentService commentService,
-            IWorkContext workContext) : base(messageExceptionFinder)
+            IWorkContext workContext,
+            IReportService reportService) : base(messageExceptionFinder)
         {
             this.commentService = commentService;
             this.workContext = workContext;
+            this.reportService = reportService;
         }
 
         /// <summary>
@@ -115,6 +123,11 @@ namespace Adopters.Api.Controllers
         {
             var comment = model.ToEntity();
             comment.UserId = this.workContext.CurrentUserId;
+
+            if (model.ReportId.HasValue && await this.reportService.GetById(model.ReportId.Value) == null)
+            {
+                return this.BadRequest(new AdoptersException(AdopterExceptionCode.RowNotFound), "ReportId");
+            }
 
             try
             {

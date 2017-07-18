@@ -93,7 +93,9 @@ namespace Adopters.Api
 
             services.RegisterAdoptersServices(this.Configuration);
 
-            services.AddCors(c => c.AddPolicy("AdoptersPolicy", builder =>
+            services.AddCors(c => c.AddPolicy(
+                "AdoptersPolicy",
+                builder =>
             {
                 builder
                 .AllowAnyOrigin()
