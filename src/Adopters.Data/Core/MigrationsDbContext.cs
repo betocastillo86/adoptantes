@@ -24,7 +24,7 @@ namespace Adopters.Data.Core
         public AdoptersContext Create(DbContextFactoryOptions options)
         {
             var builder = new DbContextOptionsBuilder<AdoptersContext>();
-            builder.UseSqlServer("Server=localhost;Database=Adopters;User Id=sa;Password=Temporal1;MultipleActiveResultSets=false");
+            builder.UseSqlServer("Server=ASUS_CASA\\SQL_ASUS;Database=Adopters;User Id=sa;Password=Temporal1;MultipleActiveResultSets=false");
             return new AdoptersContext(builder.Options);
         }
     }
