@@ -61,6 +61,11 @@ namespace Adopters.Api
 
             app.AddJWTAuthorization(env, loggerFactory);
 
+            if (env.IsDevelopment())
+            {
+                app.UseCors("AdoptersPolicy");
+            }
+
             app.UseMvc();
         }
 
@@ -87,6 +92,14 @@ namespace Adopters.Api
             .AddFluentValidation(c => c.RegisterValidatorsFromAssemblyContaining<Startup>());
 
             services.RegisterAdoptersServices(this.Configuration);
+
+            services.AddCors(c => c.AddPolicy("AdoptersPolicy", builder =>
+            {
+                builder
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader();
+            }));
         }
     }
 }
