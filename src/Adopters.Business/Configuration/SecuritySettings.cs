@@ -5,6 +5,7 @@
 //-----------------------------------------------------------------------
 namespace Adopters.Business.Configuration
 {
+    using System;
     using Adopters.Business.Services.Extensions;
     using Beto.Core.Data.Configuration;
 
@@ -67,5 +68,13 @@ namespace Adopters.Business.Configuration
         /// The maximum request file upload in MB.
         /// </value>
         public int MaxRequestFileUploadMB => this.settingService.Get<int>("SecuritySettings.MaxRequestFileUploadMB");
+
+        /// <summary>
+        /// Gets the facebook API key.
+        /// </summary>
+        /// <value>
+        /// The facebook API key.
+        /// </value>
+        public string FacebookApiKey => this.settingService.Get<string>("SecuritySettings.FacebookApiKey");
     }
 }

@@ -8,6 +8,7 @@ namespace Adopters.Api.Infraestructure.Start
     using System;
     using System.Reflection;
     using Adopters.Api.Infraestructure.Security;
+    using Adopters.Api.Infraestructure.UI;
     using Adopters.Business.Configuration;
     using Adopters.Business.Exceptions;
     using Adopters.Business.Security;
@@ -97,6 +98,10 @@ namespace Adopters.Api.Infraestructure.Start
 
             builder.RegisterType<SeoService>()
                 .As<ISeoService>()
+                .InstancePerLifetimeScope();
+
+            builder.RegisterType<JavascriptConfigurationGenerator>()
+                .As<IJavascriptConfigurationGenerator>()
                 .InstancePerLifetimeScope();
 
             //// Core services

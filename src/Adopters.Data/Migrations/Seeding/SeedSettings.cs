@@ -36,6 +36,7 @@ namespace Adopters.Data.Migrations.Seeding
             list.Add(new SystemSetting() { Name = "GeneralSettings.DefaultPictureHeight", Value = "1500" });
             list.Add(new SystemSetting() { Name = "GeneralSettings.BodyBaseHtml", Value = "%%Body%%" });
             list.Add(new SystemSetting() { Name = "GeneralSettings.SiteUrl", Value = "http://localhost:60122/" });
+            list.Add(new SystemSetting() { Name = "SecuritySettings.FacebookApiKey", Value = "1895527400661121" });
 
             foreach (var item in list)
             {

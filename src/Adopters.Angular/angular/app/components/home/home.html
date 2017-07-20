@@ -16,7 +16,7 @@
         </div>
     </header>
 	<section>
-        <ado-list-reports filter="{}"></ado-list-reports>
+        <ado-list-reports [filter]="filterReports"></ado-list-reports> 
     </section>
 	
 	
@@ -28,7 +28,7 @@
                     <hr class="light">
                     <p class="text-faded">Muchas veces no sabes si la persona que quiere adoptar a tu huellita es buena o mala. Por eso en 
 					adoptantes.com puedes validar o registrar aquellas personas que tienen historial en la adopción de perros o gatos</p>
-                    <a href="#services" class="page-scroll btn btn-default btn-xl sr-button">Reporta ya!</a>
+                    <a [href]="getRoute('newreport')" class="page-scroll btn btn-default btn-xl sr-button">Reporta ya!</a>
                 </div>
             </div>
         </div>

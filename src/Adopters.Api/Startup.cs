@@ -6,6 +6,7 @@
 namespace Adopters.Api
 {
     using Adopters.Api.Infraestructure.Start;
+    using Adopters.Api.Infraestructure.UI;
     using Autofac;
     using Beto.Core.Web.Api.Filters;
     using Beto.Core.Web.Middleware;
@@ -66,7 +67,11 @@ namespace Adopters.Api
                 app.UseCors("AdoptersPolicy");
             }
 
+            app.UseStaticFiles();
+
             app.UseMvc();
+
+            this.CreateJavascriptFile(app);
         }
 
         /// <summary>
@@ -102,6 +107,16 @@ namespace Adopters.Api
                 .AllowAnyMethod()
                 .AllowAnyHeader();
             }));
+        }
+
+        /// <summary>
+        /// Creates the <c>javascript</c> file.
+        /// </summary>
+        /// <param name="builder">The builder.</param>
+        private void CreateJavascriptFile(IApplicationBuilder builder)
+        {
+            var javascriptGenerator = (IJavascriptConfigurationGenerator)builder.ApplicationServices.GetService(typeof(IJavascriptConfigurationGenerator));
+            javascriptGenerator.CreateJavascriptConfigurationFile();
         }
     }
 }

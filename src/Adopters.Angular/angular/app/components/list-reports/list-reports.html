@@ -3,12 +3,12 @@
 
             <div class="col-md-3 col-sm-6 hero-feature" *ngFor="let report of reports">
                 <div class="thumbnail">
-                    <img src="http://placehold.it/800x500" alt="">
+                    <img [src]="getImage(report.image.fileName)" *ngIf="report.image">
                     <div class="caption  bg-success" [ngClass]="{'bg-success': report.positive, 'bg-danger':!report.positive}">
                         <h3>{{report.name}}</h3>
                         <p>{{report.description}}</p>
                         <p>
-                            <a href="#" class="btn btn-success" [ngClass]="{ 'btn-success': report.positive, 'btn-danger':!report.positive}">Ver más</a>
+                            <a [href]="getRoute('report', report.friendlyName)" class="btn btn-success" [ngClass]="{ 'btn-success': report.positive, 'btn-danger':!report.positive}">Ver más</a>
                         </p>
                     </div>
                 </div>

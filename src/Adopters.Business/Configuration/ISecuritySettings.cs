@@ -49,5 +49,13 @@ namespace Adopters.Business.Configuration
         /// The maximum request file upload in MB.
         /// </value>
         int MaxRequestFileUploadMB { get; }
+
+        /// <summary>
+        /// Gets the facebook API key.
+        /// </summary>
+        /// <value>
+        /// The facebook API key.
+        /// </value>
+        string FacebookApiKey { get; }
     }
 }

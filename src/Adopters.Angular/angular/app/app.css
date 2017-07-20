@@ -414,3 +414,10 @@ img::-moz-selection {
 body {
   webkit-tap-highlight-color: #222222;
 }
+
+
+.btn-facebook
+{
+  background-color:#3b5998;
+  color:white;
+}

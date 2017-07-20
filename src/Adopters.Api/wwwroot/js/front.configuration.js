@@ -1,0 +1,2 @@
+var app = app || {}; app.Settings = {"general":{"siteUrl":"http://localhost:60122/","configJavascriptCacheKey":"a2c3e2fb-1cfa-4746-b586-dfb1e3e404f4"},"security":{"facebookApiKey":"1895527400661121"}}
+window.app = app;
