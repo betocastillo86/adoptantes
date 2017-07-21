@@ -100,6 +100,10 @@ namespace Adopters.Api.Infraestructure.Start
                 .As<ISeoService>()
                 .InstancePerLifetimeScope();
 
+            builder.RegisterType<LocationService>()
+                .As<ILocationService>()
+                .InstancePerLifetimeScope();
+
             builder.RegisterType<JavascriptConfigurationGenerator>()
                 .As<IJavascriptConfigurationGenerator>()
                 .InstancePerLifetimeScope();

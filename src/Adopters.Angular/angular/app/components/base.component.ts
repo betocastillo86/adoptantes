@@ -13,6 +13,11 @@ export class BaseComponent
         return this.routingService.getRoute(key, ...params);
     }
 
+    getApiRoute(key:string) : string
+    {
+        return this.routingService.getApiRoute(key);
+    }
+
     getImage(path:string):string
     {
         return this.routingService.getImage(path);

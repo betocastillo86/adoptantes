@@ -16,6 +16,9 @@ import { HelperService } from "./services/helper.service";
 import { HttpService } from "./services/http.service";
 import { MainService } from "./services/main.service";
 import { AuthGuard } from "./services/auth.guard";
+import {Ng2CompleterModule} from "ng2-completer";
+import { UploadFileDirective } from './directives/upload-file.directive';
+import { FileService } from "./services/file.service";
 
 //import { environment } from '../environments/environment'
   
@@ -28,12 +31,14 @@ import { AuthGuard } from "./services/auth.guard";
     ListReportsComponent,
     NewReportComponent,
     LoginComponent,
-    LoginExternalComponent
+    LoginExternalComponent,
+    UploadFileDirective
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpModule
+    HttpModule,
+    Ng2CompleterModule
   ],
   providers: [
     ReportService,
@@ -42,7 +47,8 @@ import { AuthGuard } from "./services/auth.guard";
     HelperService,
     HttpService,
     MainService,
-    AuthGuard
+    AuthGuard,
+    FileService
   ],
   bootstrap: [AppComponent]
 })

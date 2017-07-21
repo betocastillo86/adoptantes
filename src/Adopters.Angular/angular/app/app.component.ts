@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { BaseComponent } from "./components/base.component";
 import { RoutingService } from "./services/routing.service";
-import { UserAuthenticationModel } from "./models/user.authentication";
+import { UserAuthenticationModel } from "./models/user.authentication.model";
 import { HttpService } from "./services/http.service";
 import { MainService } from "./services/main.service";
 
@@ -18,7 +18,6 @@ export class AppComponent extends BaseComponent {
    */
   constructor(private mainService:MainService, routingService:RoutingService) {
     super(routingService);
-    debugger;
     this.validateAuthentication();
   }
 

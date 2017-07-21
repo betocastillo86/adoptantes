@@ -12,7 +12,7 @@ namespace Adopters.Data.Migrations.Seeding
 
     /// <summary>
     /// Seed settings class
-    /// </summary>
+    /// </summary>DefaultPictureWidth
     public static class SeedSettings
     {
         /// <summary>

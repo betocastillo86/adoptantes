@@ -1,6 +1,6 @@
 import { BaseModel } from "./base.model";
 
-class FileModel extends BaseModel
+export class FileModel extends BaseModel
 {
     fileName:string;
     mimeType:string;

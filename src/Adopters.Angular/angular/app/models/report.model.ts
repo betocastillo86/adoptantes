@@ -6,4 +6,5 @@ export class ReportModel extends BaseModel
     email:string;
     description:string;
     friendlyName:string; 
+    positive:boolean;
 }
