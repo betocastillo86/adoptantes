@@ -21,7 +21,7 @@ export class AppComponent extends BaseComponent {
     this.validateAuthentication();
   }
 
-  logout()
+  logout() 
   {
     this.currentUser = this.mainService.logout();
   }

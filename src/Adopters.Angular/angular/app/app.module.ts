@@ -19,6 +19,7 @@ import { AuthGuard } from "./services/auth.guard";
 import {Ng2CompleterModule} from "ng2-completer";
 import { UploadFileDirective } from './directives/upload-file.directive';
 import { FileService } from "./services/file.service";
+import { FormsModule } from "@angular/forms";
 
 //import { environment } from '../environments/environment'
   
@@ -38,7 +39,8 @@ import { FileService } from "./services/file.service";
     BrowserModule,
     AppRoutingModule,
     HttpModule,
-    Ng2CompleterModule
+    Ng2CompleterModule,
+    FormsModule
   ],
   providers: [
     ReportService,

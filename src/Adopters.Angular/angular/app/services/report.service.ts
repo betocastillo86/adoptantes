@@ -15,10 +15,20 @@ export class ReportService extends BaseService {
     super();
   }
 
+  private getApiRoute(id?:number):string
+  {
+    return this.getRoute("reports/") + (id !== undefined ? id : "");
+  }
+
   getAll(filter:ReportFilterModel)
   {
-    return this.http.get(this.getRoute("reports"), { search: filter })
+    return this.http.get(this.getApiRoute(), { search: filter })
       .map(( res: Response ) => res.json());
+  }
+
+  post(model:ReportModel)
+  {
+      return this.http.post(this.getApiRoute(), model);
   }
 
 }

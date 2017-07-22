@@ -1,9 +1,12 @@
 import { BaseComponent } from "../base.component";
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewChild } from "@angular/core";
 import { RoutingService } from "../../services/routing.service";
-import { RemoteData, CompleterService } from "ng2-completer";
+import { RemoteData, CompleterService, CompleterItem } from "ng2-completer";
 import { ReportModel } from "../../models/report.model";
 import { FileModel } from "../../models/file.model";
+import { NgForm } from "@angular/forms";
+import { ReportService } from "../../services/report.service";
+import { Router } from "@angular/router";
 //import { RemoteData } from "ng2-completer";
 
 @Component({
@@ -14,6 +17,8 @@ export class NewReportComponent extends BaseComponent implements OnInit
 {
 	//private dataLocations:RemoteData;
 	
+	@ViewChild("reportForm") reportForm:NgForm;
+
 	locationsDatasource:RemoteData;
 	model:ReportModel;
 
@@ -27,7 +32,11 @@ export class NewReportComponent extends BaseComponent implements OnInit
 	/**
 	 *
 	 */
-	constructor(routingService:RoutingService, private completerService:CompleterService) {
+	constructor(
+		routingService:RoutingService,
+		private completerService:CompleterService, 
+		private reportService:ReportService,
+		private router:Router) {
 		super(routingService);
 	}
 
@@ -37,9 +46,42 @@ export class NewReportComponent extends BaseComponent implements OnInit
 		this.model.positive = newValue;
 	}
 
-	fileCompleted(fileModel:FileModel)
+	imageCompleted(fileModel:FileModel)
 	{
+		this.model.image = fileModel;
 		console.log("El archivo fue correctamente cargado", fileModel);
+	}
+
+	locationChanged(selected:CompleterItem)
+	{
+		if(selected)
+		{
+			this.model.location.id = selected.originalObject.id;
+		}
+		else
+		{
+			this.model.location.id = 0;
+		}
+	}
+
+	save()
+	{
+		if(this.reportForm.valid)
+		{
+			this.reportService.post(this.model)
+			.subscribe(data => {
+				this.confirmSaved(data)
+			},
+			err => {
+				console.log(err);
+			});
+		}
+	}
+
+	private confirmSaved(data:any)
+	{
+		alert("Gracias por dejar tu reporte");
+		this.router.navigate([this.getRoute("home")]);
 	}
 
 }

@@ -97,8 +97,6 @@ export class UploadFileDirective {
 
   private postCompleted(file:FileModel)
   {
-      debugger;
-      console.log("antes de emitir");
       this.onCompleted.emit(file);
   }
 
