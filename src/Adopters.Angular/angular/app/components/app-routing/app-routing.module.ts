@@ -6,12 +6,14 @@ import { NewReportComponent } from "../new-report/new-report.component";
 import { LoginComponent } from "../login/login.component";
 import { LoginExternalComponent } from "../login-external/login-external.component";
 import { AuthGuard } from "../../services/auth.guard";
+import { ReportComponent } from "../report/report.component";
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'reportar', component: NewReportComponent/*, canActivate: [AuthGuard]*/ },
   { path: 'registrarse', component: LoginComponent },
-  { path: 'externallogin', component: LoginExternalComponent }
+  { path: 'externallogin', component: LoginExternalComponent },
+  { path: 'reportado/:friendlyName', component: ReportComponent }
 ];
 
 @NgModule({

@@ -1,6 +1,7 @@
 import { BaseModel } from "./base.model";
 import { FileModel } from "./file.model";
 import { LocationModel } from "./location.model";
+import { UserModel } from "./user.model";
 
 export class ReportModel extends BaseModel
 {
@@ -19,4 +20,5 @@ export class ReportModel extends BaseModel
     positive:boolean;
     image:FileModel;
     location:LocationModel;
+    user:UserModel;
 }

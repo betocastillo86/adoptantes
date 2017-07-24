@@ -1,0 +1,105 @@
+<div class="container" *ngIf="model">
+
+        <div class="row">
+
+            <!-- Blog Post Content Column -->
+            <div class="col-lg-12">
+
+                <!-- Blog Post -->
+
+                <!-- Title -->
+                <h1>{{model.name}} - {{model.positive ? "Buen" : "Mal"}} adoptante</h1>
+
+                <!-- Author -->
+                <p class="lead">
+                    reportado por <a href="http://www.facebook.com/{{model.user.facebookId}}">{{model.user.name}}</a>
+                </p>
+
+                <hr>
+
+                <!-- Date/Time -->
+                <p><span class="glyphicon glyphicon-time"></span> Publicado el {{model.creationDate | date: 'yyyy/MM/dd'}}</p>
+
+                <hr *ngIf="model.image" >
+
+                <!-- Preview Image -->
+                <img *ngIf="model.image" class="img-responsive" [src]="getImage(model.image.fileName)" alt="">
+
+                <hr>
+
+                <!-- Post Content -->
+                
+                <p>{{model.description}}</p>
+                <hr>
+
+                <!-- Blog Comments -->
+
+                <!-- Comments Form -->
+                <div class="well">
+                    <h4>Deja un comentario:</h4>
+                    <form #commentForm="ngForm" (ngSubmit)="saveComment(commentForm)" role="form">
+                        <div class="form-group" [ngClass]="{'has-error': commentForm.submitted && commentValue.invalid }">
+                            <textarea #commentValue="ngModel" name="commentValue" [(ngModel)]="newComment.value" class="form-control" rows="3" maxvalue="500" required></textarea>
+                            <div class="bg-danger" *ngIf="commentForm.submitted && commentValue.invalid">Ingresa el comentario</div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Comentar</button>
+                    </form>
+                </div>
+
+                <hr>
+
+                <!-- Posted Comments -->
+
+                <!-- Comment -->
+                <div class="media" *ngFor="let comment of comments">
+                    <a class="pull-left" href="https://www.facebook.com/{{comment.user.facebookId}}">
+                        <img class="media-object" src="http://graph.facebook.com/{{comment.user.facebookId}}/picture?type=square" alt="">
+                    </a>
+                    <div class="media-body">
+                        <h4 class="media-heading">{{comment.user.name}}
+                            <small>{{comment.creationDate | date: 'yyyy/mm/dd  hh:mm'}}</small>
+                        </h4>
+                        {{comment.value}} <button type="button" (click)="showAddSubcomment(comment.id)">Responder</button>
+                        
+
+                        <div class="media" *ngFor="let subcomment of comment.firstComments">
+                            <a class="pull-left" href="https://www.facebook.com/{{subcomment.user.facebookId}}">
+                                <img class="media-object" src="http://graph.facebook.com/{{subcomment.user.facebookId}}/picture?type=square" alt="">
+                            </a>
+                            <div class="media-body">
+                                <h4 class="media-heading">{{subcomment.user.name}}
+                                    <small>{{subcomment.creationDate | date: 'yyyy/mm/dd hh:mm'}}</small>
+                                </h4>
+                                {{subcomment.value}}
+                            </div>
+                        </div>
+
+                        <form *ngIf="showNewSubcommentId == comment.id" #subcommentForm="ngForm" (ngSubmit)="saveComment(subcommentForm, comment.id)" role="form">
+                            <div class="form-group" [ngClass]="{'has-error': subcommentForm.submitted && newSubComment.invalid }">
+                                <textarea #subcommentValue="ngModel" name="commentValue" [(ngModel)]="newSubComment.value" class="form-control" rows="3" maxvalue="500" required></textarea>
+                                <div class="bg-danger" *ngIf="subcommentForm.submitted && newSubComment.invalid">Ingresa el comentario</div>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Comentar</button>
+                        </form>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+        <!-- /.row -->
+
+        <hr>
+
+        <!-- Footer -->
+        <footer>
+            <div class="row">
+                <div class="col-lg-12">
+                    <p>Copyright © Your Website 2014</p>
+                </div>
+            </div>
+            <!-- /.row -->
+        </footer>
+
+    </div>

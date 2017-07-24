@@ -20,6 +20,8 @@ import {Ng2CompleterModule} from "ng2-completer";
 import { UploadFileDirective } from './directives/upload-file.directive';
 import { FileService } from "./services/file.service";
 import { FormsModule } from "@angular/forms";
+import { ReportComponent } from "./components/report/report.component";
+import { CommentService } from "./services/comment.service";
 
 //import { environment } from '../environments/environment'
   
@@ -33,7 +35,8 @@ import { FormsModule } from "@angular/forms";
     NewReportComponent,
     LoginComponent,
     LoginExternalComponent,
-    UploadFileDirective
+    UploadFileDirective,
+    ReportComponent
   ],
   imports: [
     BrowserModule,
@@ -50,7 +53,8 @@ import { FormsModule } from "@angular/forms";
     HttpService,
     MainService,
     AuthGuard,
-    FileService
+    FileService,
+    CommentService
   ],
   bootstrap: [AppComponent]
 })

@@ -1,1 +1,1 @@
-var app = app || {}; app.Settings = {"general":{"siteUrl":"http://localhost:60122/","configJavascriptCacheKey":"b80a2ae6-49c2-4643-b7e6-6aca0a9bfdaa"},"security":{"facebookApiKey":"1895527400661121"}}
+var app = app || {}; app.Settings = {"general":{"siteUrl":"http://localhost:60122/","configJavascriptCacheKey":"0b1fa60b-ebc6-45e7-aaa7-f51adc41296d"},"security":{"facebookApiKey":"1895527400661121"}}
