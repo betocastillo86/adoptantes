@@ -14,6 +14,7 @@ namespace Adopters.Api
     using FluentValidation.AspNetCore;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
+    using Microsoft.AspNetCore.ResponseCompression;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Logging;
@@ -67,6 +68,8 @@ namespace Adopters.Api
             {
                 app.UseCors("AdoptersPolicy");
             }
+
+            app.UseResponseCompression();
 
             app.Use(async (context, next) =>
             {
@@ -123,6 +126,9 @@ namespace Adopters.Api
                 .AllowAnyMethod()
                 .AllowAnyHeader();
             }));
+
+            services.Configure<GzipCompressionProviderOptions>(options => options.Level = System.IO.Compression.CompressionLevel.Optimal);
+            services.AddResponseCompression();
         }
 
         /// <summary>
