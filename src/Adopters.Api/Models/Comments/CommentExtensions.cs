@@ -66,7 +66,7 @@ namespace Adopters.Api.Models
             ////Carga los dos primeros comentarios asociados a ese comentario
             if (loadFirstComments && entity.CountSubcomments > 0)
             {
-                model.FirstComments = commentService.Search(parentCommentId: entity.Id, pageSize: 2)
+                model.FirstComments = commentService.Search(parentCommentId: entity.Id, pageSize: 10)
                     .Result
                     .ToModels(currentUser, commentService, contentUrlFunction);
             }

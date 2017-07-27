@@ -1,17 +1,27 @@
 <div class="container">
- <div class="row text-center">
+ <div class="row text-center" *ngIf="reports">
 
-            <div class="col-md-3 col-sm-6 hero-feature" *ngFor="let report of reports">
+            <div class="col-md-4 col-sm-6 hero-feature"  *ngFor="let report of reports;">
                 <div class="thumbnail">
-                    <img [src]="getImage(report.image.fileName)" *ngIf="report.image">
+                    <a [routerLink]="getRoute('report', report.friendlyName)">
+                        <img [src]="report.image ? getImage(report.image.fileName) : 'assets/img/notreportimage.png'" alt="Imagen adoptante {{report.name}}">
+                    </a>
                     <div class="caption  bg-success" [ngClass]="{'bg-success': report.positive, 'bg-danger':!report.positive}">
                         <h3>{{report.name}}</h3>
-                        <p>{{report.description}}</p>
+                        <p>{{report.location?.name}}</p>
+                        <p>{{report.description | slice:0:120}}</p>
                         <p>
-                            <a [href]="getRoute('report', report.friendlyName)" class="btn btn-success" [ngClass]="{ 'btn-success': report.positive, 'btn-danger':!report.positive}">Ver más</a>
+                            <a [routerLink]="getRoute('report', report.friendlyName)" class="btn btn-success" [ngClass]="{ 'btn-success': report.positive, 'btn-danger':!report.positive}">Ver más</a>
                         </p>
                     </div>
                 </div>
             </div>
+            <div class="col-md-12" style="text-align:center" *ngIf="!reports || reports.length == 0">
+                No se encontraron resultados
+            </div>
         </div>
+       </div>
+
+       <div style="text-align:center">
+           <button class="btn btn-primary" *ngIf="showNextPage" (click)="nextPage()">Ver más</button>
        </div>

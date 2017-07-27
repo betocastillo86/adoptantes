@@ -1,4 +1,4 @@
-<div class="container" *ngIf="model">
+<div class="container topNotFixed" *ngIf="model">
 
         <div class="row">
 
@@ -23,13 +23,15 @@
                 <hr *ngIf="model.image" >
 
                 <!-- Preview Image -->
-                <img *ngIf="model.image" class="img-responsive" [src]="getImage(model.image.fileName)" alt="">
 
+                <div style="text-align:center">
+                    <img *ngIf="model.image" class="img-responsive" style="display:inline" [src]="getImage(model.image.fileName)" alt="">
+                </div>
                 <hr>
 
-                <!-- Post Content -->
+                <!-- Post Content --> 
                 
-                <p>{{model.description}}</p>
+                <p [innerHtml]="model.description | newLine">/p>
                 <hr>
 
                 <!-- Blog Comments -->
@@ -42,7 +44,8 @@
                             <textarea #commentValue="ngModel" name="commentValue" [(ngModel)]="newComment.value" class="form-control" rows="3" maxvalue="500" required></textarea>
                             <div class="bg-danger" *ngIf="commentForm.submitted && commentValue.invalid">Ingresa el comentario</div>
                         </div>
-                        <button type="submit" class="btn btn-primary">Comentar</button>
+                        <button type="submit" class="btn btn-primary" [disabled]="!isLoggedIn" >Comentar</button>
+                        <div *ngIf="!isLoggedIn">Debes estar registrado para poder comentar. Entra dando clic <a [routerLink]="getRoute('login')" [queryParams]="returnUrl" >aquí</a></div>
                     </form>
                 </div>
 
@@ -59,7 +62,7 @@
                         <h4 class="media-heading">{{comment.user.name}}
                             <small>{{comment.creationDate | date: 'yyyy/mm/dd  hh:mm'}}</small>
                         </h4>
-                        {{comment.value}} <button type="button" (click)="showAddSubcomment(comment.id)">Responder</button>
+                        {{comment.value}} <button type="button" (click)="showAddSubcomment(comment.id)" *ngIf="isLoggedIn">Responder</button>
                         
 
                         <div class="media" *ngFor="let subcomment of comment.firstComments">
@@ -73,7 +76,9 @@
                                 {{subcomment.value}}
                             </div>
                         </div>
-
+                        <!--<div *ngIf="comment.countSubcomments != comment.firstComments.length" style="margin:5px">
+                            <button class="btn btn-info" (click)="showMoreSubcomments(comment)" >Ver más</button>
+                        </div>-->
                         <form *ngIf="showNewSubcommentId == comment.id" #subcommentForm="ngForm" (ngSubmit)="saveComment(subcommentForm, comment.id)" role="form">
                             <div class="form-group" [ngClass]="{'has-error': subcommentForm.submitted && newSubComment.invalid }">
                                 <textarea #subcommentValue="ngModel" name="commentValue" [(ngModel)]="newSubComment.value" class="form-control" rows="3" maxvalue="500" required></textarea>
@@ -84,6 +89,14 @@
 
                     </div>
                 </div>
+                <div style="text-align:center" >
+                    <button  class="btn btn-danger" *ngIf="isThereMoreComments" (click)="showMoreComments()">Ver más</button>
+                </div>
+                
+
+                <div *ngIf="comments && comments.length == 0" style="text-align:center">
+                    No hay comentarios
+                </div>
 
             </div>
 
@@ -91,15 +104,4 @@
         <!-- /.row -->
 
         <hr>
-
-        <!-- Footer -->
-        <footer>
-            <div class="row">
-                <div class="col-lg-12">
-                    <p>Copyright © Your Website 2014</p>
-                </div>
-            </div>
-            <!-- /.row -->
-        </footer>
-
     </div>

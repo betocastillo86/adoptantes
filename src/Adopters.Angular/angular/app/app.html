@@ -1,27 +1,27 @@
-<nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
+<nav id="mainNav" class="navbar navbar-default navbar-fixed-top" [class.affix]="navIsFixed">
         <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <button type="button" class="navbar-toggle collapsed" (click)="toggleMenu()">
                     <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
                 </button>
-                <a class="navbar-brand page-scroll" href="#page-top">Adoptantes.com</a>
+                <a class="navbar-brand page-scroll" [routerLink]="getRoute('home')" style="margin:0px;padding:0px"><img src="assets/img/logo.png" style="width:80%" alt="Logo Adoptante.com"></a> 
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <div class="collapse navbar-collapse" [style.display]="displayMenu" (click)="hideMenu()">
                 <ul class="nav navbar-nav navbar-right">
                     <li *ngIf="!currentUser">
-                        <a class="page-scroll" [href]="getRoute('login')">Registrate</a>
+                        <a class="page-scroll" [routerLink]="getRoute('login')">Registrate</a>
                     </li>
                     <li *ngIf="currentUser">
-                        Bienvenido {{currentUser.name}}
+                        <a>Bienvenido {{currentUser.name}}</a>
                     </li>
                     <li *ngIf="currentUser">
-                        <a class="page-scroll" (click)="logout()">Salir</a>
+                        <a class="page-scroll"  (click)="logout()">Salir</a>
                     </li>
                     <li>
-                        <a class="page-scroll" [href]="getRoute('newreport')">Reporta</a>
+                        <a class="page-scroll" [routerLink]="getRoute('newreport')">Reporta</a>
                     </li>
                 </ul>
             </div>

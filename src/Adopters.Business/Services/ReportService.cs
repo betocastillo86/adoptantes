@@ -98,7 +98,12 @@ namespace Adopters.Business.Services
 
             if (!string.IsNullOrWhiteSpace(keyword))
             {
-                query = query.Where(c => c.Name.Contains(keyword) || c.Description.Contains(keyword) || c.Email.Contains(keyword));
+                var keywordParts = keyword.Split(new char[] { ' ' });
+
+                foreach (var part in keywordParts)
+                {
+                    query = query.Where(c => c.Name.Contains(part) || c.Description.Contains(part) || c.Email.Contains(part));
+                }
             }
 
             if (!string.IsNullOrWhiteSpace(email))

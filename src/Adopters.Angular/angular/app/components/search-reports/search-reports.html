@@ -1,0 +1,41 @@
+<div class="container topNotFixed">
+
+        <!-- Page Header -->
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">Buscar reportes
+                </h1>
+            </div>
+            <div>
+                <form>
+                    <div class="form-group col-md-6">
+                        <label for="keyword">Busca por nombre o correo</label>
+                        <input type="text" #keyword="ngModel" [(ngModel)]="filter.keyword" name="keyword" class="form-control">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="location">Ciudad</label>
+                        <ng2-completer  
+                            [datasource]="locationsDatasource"
+                            [pause]="300"
+                            [minSearchLength]="1"
+                            [inputClass]="'form-control'"
+                            (selected)="locationChanged($event)"
+                            ></ng2-completer>
+                    </div>
+                    <div>
+                        <a 
+                        [routerLink]="getRoute('search')" 
+                        [queryParams]="{ keyword: keyword.value, locationId:filter.locationId || '', locationName:selectedLocationName }" 
+                        (click)="reloadResults()"
+                        style="float:right" class="btn btn-primary">Buscar</a>
+                    </div>
+                </form>
+                <br>
+                <br>
+            </div>
+        </div>
+        <!-- /.row -->
+        <ado-list-reports *ngIf="filter && showResults" [(filter)]="filter" [enablePaging]="true"></ado-list-reports>
+        <hr>
+
+    </div>

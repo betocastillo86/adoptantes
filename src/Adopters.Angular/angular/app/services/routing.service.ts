@@ -15,6 +15,8 @@ export class RoutingService extends BaseService
                 return "/externallogin?returnUrl="+params[0];
             case "report":
                 return "/reportado/"+ params[0];
+            case "search":
+                return "/buscar";
             default:
             return "/";
         } 
@@ -32,6 +34,6 @@ export class RoutingService extends BaseService
 
     getFullRoute(key:string, ...params:string[]) : string
     {
-        return 'http://localhost:4200/' + this.getRoute(key, ...params);
+        return this.siteUrl + this.getRoute(key, ...params);
     }
 }

@@ -7,10 +7,12 @@ import { LoginComponent } from "../login/login.component";
 import { LoginExternalComponent } from "../login-external/login-external.component";
 import { AuthGuard } from "../../services/auth.guard";
 import { ReportComponent } from "../report/report.component";
+import { SearchReportsComponent } from "../search-reports/search-reports.component";
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
-  { path: 'reportar', component: NewReportComponent/*, canActivate: [AuthGuard]*/ },
+  { path: 'reportar', component: NewReportComponent, canActivate: [AuthGuard] },
+  { path: 'buscar', component: SearchReportsComponent }, 
   { path: 'registrarse', component: LoginComponent },
   { path: 'externallogin', component: LoginExternalComponent },
   { path: 'reportado/:friendlyName', component: ReportComponent }

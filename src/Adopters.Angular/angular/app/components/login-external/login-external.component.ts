@@ -11,7 +11,7 @@ import { MainService } from "../../services/main.service";
 
 @Component({
     selector:'ado-external-login',
-    template:''
+    template:'Redireccionando a la página en la que te encontrabas'
 })
 export class LoginExternalComponent extends BaseComponent implements OnInit 
 {

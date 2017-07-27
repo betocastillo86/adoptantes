@@ -21,4 +21,6 @@ export class ReportModel extends BaseModel
     image:FileModel;
     location:LocationModel;
     user:UserModel;
+    facebookProfile:string;
+    twitterProfile:string;
 }

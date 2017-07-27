@@ -21,6 +21,7 @@ export class NewReportComponent extends BaseComponent implements OnInit
 
 	locationsDatasource:RemoteData;
 	model:ReportModel;
+	isBusy:boolean;
 
 	ngOnInit(): void {
 		this.locationsDatasource =  this.completerService.remote(this.getApiRoute("locations?name="), "name", "name");
@@ -66,14 +67,17 @@ export class NewReportComponent extends BaseComponent implements OnInit
 
 	save()
 	{
-		if(this.reportForm.valid)
+		if(this.reportForm.valid && !this.isBusy)
 		{
+			this.isBusy = true;
 			this.reportService.post(this.model)
 			.subscribe(data => {
 				this.confirmSaved(data)
+				this.isBusy = false; 
 			},
 			err => {
 				console.log(err);
+				this.isBusy = false; 
 			});
 		}
 	}

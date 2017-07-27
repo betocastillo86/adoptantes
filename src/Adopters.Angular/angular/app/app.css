@@ -276,6 +276,13 @@ header .header-content .header-content-inner p {
   .portfolio-box .portfolio-box-caption .portfolio-box-caption-content .project-name {
     font-size: 22px;
   }
+
+  .thumbnail .caption
+  {
+    height: 280px;
+  }
+
+
 }
 .call-to-action h2 {
   margin: 0 auto 20px;
@@ -426,4 +433,8 @@ body {
 {
   border:solid 1px #f2f2f2 !important;
   border-radius: 10px;
+}
+.topNotFixed
+{
+  margin-top:50px;
 }

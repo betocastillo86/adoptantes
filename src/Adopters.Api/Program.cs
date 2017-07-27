@@ -25,9 +25,11 @@ namespace Adopters.Api
                 .UseKestrel()
                 .ConfigureServices(services => services.AddAutofac())
                 .UseContentRoot(Directory.GetCurrentDirectory())
+                .UseSetting("detailedErrors", "true")
                 .UseIISIntegration()
                 .UseStartup<Startup>()
                 .UseApplicationInsights()
+                .CaptureStartupErrors(true)
                 .Build();
 
             host.Run();

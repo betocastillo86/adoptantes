@@ -2,12 +2,14 @@ import { BaseComponent } from "../base.component";
 import { RoutingService } from "../../services/routing.service";
 import { OnInit, Component, ViewChild } from "@angular/core";
 import { ReportService } from "../../services/report.service";
-import { ActivatedRoute, ParamMap, Params } from "@angular/router";
+import { ActivatedRoute, ParamMap, Params, Router } from "@angular/router";
 import { ReportModel } from "../../models/report.model";
 import { CommentFilterModel } from "../../models/comment.filter.model";
 import { CommentModel } from "../../models/comment.model";
 import { CommentService } from "../../services/comment.service";
 import { NgForm } from "@angular/forms";
+import { MainService } from "../../services/main.service";
+import { SeoService } from "../../services/seo.service";
 
 @Component({
     selector: 'ado-report',
@@ -23,6 +25,9 @@ export class ReportComponent extends BaseComponent implements OnInit
     newComment:CommentModel;
     newSubComment:CommentModel;
     showNewSubcommentId:number;
+    isThereMoreComments:boolean;
+    isLoggedIn:boolean;
+    returnUrl:any;
  
     /**
      *
@@ -31,12 +36,16 @@ export class ReportComponent extends BaseComponent implements OnInit
         routingService:RoutingService, 
         private reportService: ReportService,
         private activatedRoute:ActivatedRoute,
-        private commentService:CommentService) {
+        private commentService:CommentService,
+        private mainService:MainService,
+        private router:Router,
+        private seoService:SeoService) {
 
         super(routingService);
 
         this.filterComments = new CommentFilterModel();
         this.filterComments.pageSize = 10;
+        this.filterComments.page = 0;
         this.filterComments.withChildren = true;
 
         this.newComment = new CommentModel();
@@ -46,6 +55,9 @@ export class ReportComponent extends BaseComponent implements OnInit
     ngOnInit(): void {
         this.activatedRoute.params.subscribe((params:Params) => this.friendlyName = params['friendlyName']);
         this.loadReport();
+        console.log(this.mainService.currentUser);
+        this.isLoggedIn = this.mainService.currentUser != undefined;
+        this.returnUrl = {returnUrl:this.router.url};
     }
 
     loadReport()
@@ -53,6 +65,9 @@ export class ReportComponent extends BaseComponent implements OnInit
         this.reportService.get(this.friendlyName)
             .subscribe(data  => {
                 this.model = data.json() as ReportModel;
+
+                this.seoService.setGeneralSeo(this.model.name + " - Valida si es un buen(a) adoptante o no para tu perro o gato", this.model.description);
+
                 this.loadComments();
             });
     }
@@ -61,7 +76,22 @@ export class ReportComponent extends BaseComponent implements OnInit
     {
         this.filterComments.reportId = this.model.id; 
         this.commentService.getAll(this.filterComments)
-            .subscribe(data => this.comments = (data.json()).results as CommentModel[]);
+            .subscribe(data => {
+                let response = data.json();
+
+                let commentsPage = (response).results as CommentModel[];
+                
+                if(this.filterComments.page == 0)
+                {
+                    this.comments = commentsPage;
+                }
+                else
+                {
+                    this.comments = this.comments.concat(commentsPage);
+                }
+                
+                this.isThereMoreComments = response.meta.hasNextPage;
+            });
     }
 
     showAddSubcomment(id:number)
@@ -87,6 +117,7 @@ export class ReportComponent extends BaseComponent implements OnInit
             
             this.commentService.post(comment)
                 .subscribe(data => {
+                    this.filterComments.page = 0;
                     this.loadComments();
                     this.newComment = new CommentModel();
                     this.newSubComment = new CommentModel();
@@ -96,5 +127,11 @@ export class ReportComponent extends BaseComponent implements OnInit
                 alert("Ocurrió un error al guardar el comentario");
             } );
         }
+    }
+
+    showMoreComments()
+    {
+        this.filterComments.page++;
+        this.loadComments();
     }
 }

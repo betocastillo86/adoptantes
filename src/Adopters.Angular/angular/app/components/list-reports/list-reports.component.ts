@@ -13,9 +13,12 @@ import { BaseComponent } from "../base.component";
 export class ListReportsComponent extends BaseComponent implements OnInit {
 
   @Input() filter:ReportFilterModel;
+  @Input() enablePaging:boolean;
+
   private readonly reportService: ReportService;
   reports:ReportModel[];
   hasNextPage:boolean;
+  showNextPage:boolean;
 
   constructor(reportService: ReportService, routingService: RoutingService) { 
     super(routingService);
@@ -30,9 +33,28 @@ export class ListReportsComponent extends BaseComponent implements OnInit {
   {
     this.reportService.getAll(this.filter)
       .subscribe(reponse => {
-        this.reports = reponse.results;
+
+      let records = reponse.results as ReportModel[];
+
+      if(!this.reports)
+      {
+        this.reports = records;
+      }
+      else
+      {
+        this.reports = this.reports.concat(records);
+      }
+
+        
         this.hasNextPage= reponse.meta.hasNextPage;
+        this.showNextPage = this.enablePaging && this.hasNextPage;
       });
+  }
+
+  nextPage()
+  {
+    this.filter.page++;
+    this.getReports();
   }
 
 }

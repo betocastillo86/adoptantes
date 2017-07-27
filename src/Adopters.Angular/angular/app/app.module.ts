@@ -22,6 +22,9 @@ import { FileService } from "./services/file.service";
 import { FormsModule } from "@angular/forms";
 import { ReportComponent } from "./components/report/report.component";
 import { CommentService } from "./services/comment.service";
+import { NewLinePipe } from "./pipes/newline.pipe";
+import { SearchReportsComponent } from "./components/search-reports/search-reports.component";
+import { SeoService } from "./services/seo.service";
 
 //import { environment } from '../environments/environment'
   
@@ -36,7 +39,9 @@ import { CommentService } from "./services/comment.service";
     LoginComponent,
     LoginExternalComponent,
     UploadFileDirective,
-    ReportComponent
+    ReportComponent,
+    NewLinePipe,
+    SearchReportsComponent
   ],
   imports: [
     BrowserModule,
@@ -54,7 +59,8 @@ import { CommentService } from "./services/comment.service";
     MainService,
     AuthGuard,
     FileService,
-    CommentService
+    CommentService,
+    SeoService
   ],
   bootstrap: [AppComponent]
 })
