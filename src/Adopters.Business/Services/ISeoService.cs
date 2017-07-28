@@ -6,6 +6,7 @@
 namespace Adopters.Business.Services
 {
     using System.Collections.Generic;
+    using System.Threading.Tasks;
 
     /// <summary>
     /// Interface of SEO service
@@ -32,5 +33,11 @@ namespace Adopters.Business.Services
         /// </summary>
         /// <returns>the routes</returns>
         IDictionary<string, string> GetRoutes();
+
+        /// <summary>
+        /// Gets the sitemap.
+        /// </summary>
+        /// <returns>The XML Site map</returns>
+        Task<string> GetSitemap();
     }
 }

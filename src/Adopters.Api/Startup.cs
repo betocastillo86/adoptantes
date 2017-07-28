@@ -86,8 +86,6 @@ namespace Adopters.Api
 
             app.UseStaticFiles();
 
-            //app.UseDefaultFiles();
-
             app.UseMvc();
 
             this.CreateJavascriptFile(app);

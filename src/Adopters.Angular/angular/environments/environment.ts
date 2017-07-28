@@ -7,5 +7,7 @@ export const environment = {
   production: false,
   apiUrl: 'http://localhost:60122/api/v1/',
   siteUrl: 'http://localhost:60122/',
-  facebookApi: '1895527400661121'
+  facebookApi: '1895527400661121',
+  enableAnalytics: false,
+  analyticsCode: ''
 };

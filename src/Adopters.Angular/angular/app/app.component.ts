@@ -6,8 +6,11 @@ import { HttpService } from "./services/http.service";
 import { MainService } from "./services/main.service";
 import { DOCUMENT, Title } from "@angular/platform-browser";
 import { Location } from '@angular/common';
-import { Router, ActivatedRoute } from "@angular/router";
+import { Router, ActivatedRoute, NavigationEnd } from "@angular/router";
 import { SeoService } from "./services/seo.service";
+import { environment } from "../environments/environment";
+
+declare var ga:Function;
 
 @Component({
   selector: 'ado-root',
@@ -23,18 +26,30 @@ export class AppComponent extends BaseComponent implements OnInit {
   
   seoTitle:string;
   seoDescription:string;
+  analyticsEnabled:boolean;
+  analyticsCode:string;
   
   /**
    *
    */
   constructor(private mainService:MainService, 
-  routingService:RoutingService,
+   routingService:RoutingService,
     @Inject(DOCUMENT) private document: Document,
     private router:Router,
     private location:Location) {
     
     super(routingService);
     this.validateAuthentication();
+    this.analyticsEnabled = environment.enableAnalytics;
+    this.analyticsCode = environment.analyticsCode;
+
+    this.router.events.subscribe((ev) => {
+      if(ev instanceof NavigationEnd)
+      {
+        this.registerAnalytics();
+      }
+    });
+
     
   }
 
@@ -44,7 +59,10 @@ export class AppComponent extends BaseComponent implements OnInit {
       this.isHome = location.pathname == '/';
       this.navIsFixed = !this.isHome;
       this.validateAuthentication();
+      //this.registerAnalytics();
     });
+
+    
   }
 
 
@@ -77,6 +95,18 @@ export class AppComponent extends BaseComponent implements OnInit {
     if(this.displayMenu != undefined)
     {
       this.displayMenu = 'none';
+    }
+  }
+
+  registerAnalytics()
+  {
+    if(this.analyticsEnabled)
+    {
+        ga('send', 'pageview');
+    }
+    else
+    {
+      console.log("Page view trackeado");
     }
   }
 

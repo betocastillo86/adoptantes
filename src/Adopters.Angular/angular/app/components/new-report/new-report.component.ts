@@ -22,6 +22,7 @@ export class NewReportComponent extends BaseComponent implements OnInit
 	locationsDatasource:RemoteData;
 	model:ReportModel;
 	isBusy:boolean;
+	isLoadingImage:boolean;
 
 	ngOnInit(): void {
 		this.locationsDatasource =  this.completerService.remote(this.getApiRoute("locations?name="), "name", "name");
@@ -49,8 +50,18 @@ export class NewReportComponent extends BaseComponent implements OnInit
 
 	imageCompleted(fileModel:FileModel)
 	{
+		this.isLoadingImage = false;
 		this.model.image = fileModel;
-		console.log("El archivo fue correctamente cargado", fileModel);
+	}
+
+	imageError(error:any)
+	{
+		if(error)
+		{
+			alert("Ocurrió un error cargando el archivo");
+		}
+
+		this.isLoadingImage = false;
 	}
 
 	locationChanged(selected:CompleterItem)
@@ -69,6 +80,7 @@ export class NewReportComponent extends BaseComponent implements OnInit
 	{
 		if(this.reportForm.valid && !this.isBusy)
 		{
+			this.model.email = this.model.email == '' ? undefined : this.model.email;
 			this.isBusy = true;
 			this.reportService.post(this.model)
 			.subscribe(data => {
@@ -80,6 +92,11 @@ export class NewReportComponent extends BaseComponent implements OnInit
 				this.isBusy = false; 
 			});
 		}
+	}
+
+	imageSelected(string:any)
+	{
+		this.isLoadingImage = true;
 	}
 
 	private confirmSaved(data:any)

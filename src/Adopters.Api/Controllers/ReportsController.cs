@@ -161,8 +161,8 @@ namespace Adopters.Api.Controllers
                 if (report.FileId.HasValue)
                 {
                     var file = await this.fileService.GetById(report.FileId.Value);
-                    this.pictureService.GetPicturePath(file, this.generalSettings.BigPictureWidth, this.generalSettings.BigPictureHeight, true);
-                    this.pictureService.GetPicturePath(file, this.generalSettings.SmallPictureWidth, this.generalSettings.SmallPictureHeight, true);
+                    this.pictureService.GetPicturePath(file, this.generalSettings.BigPictureWidth, this.generalSettings.BigPictureHeight, true, ResizeMode.Pad);
+                    this.pictureService.GetPicturePath(file, this.generalSettings.SmallPictureWidth, this.generalSettings.SmallPictureHeight, true, ResizeMode.BoxPad);
                 }
 
                 var createdUri = this.Url.Link("Get_Report_Id", new BaseModel() { Id = report.Id });

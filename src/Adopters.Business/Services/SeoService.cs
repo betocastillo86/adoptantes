@@ -6,7 +6,9 @@
 namespace Adopters.Business.Services
 {
     using System.Collections.Generic;
+    using System.Threading.Tasks;
     using Adopters.Business.Configuration;
+    using Beto.Core.Data.Common;
 
     /// <summary>
     /// The SEO service
@@ -20,12 +22,29 @@ namespace Adopters.Business.Services
         private readonly IGeneralSettings generalSettings;
 
         /// <summary>
+        /// The report service
+        /// </summary>
+        private readonly IReportService reportService;
+
+        /// <summary>
+        /// The SEO helper
+        /// </summary>
+        private readonly ISeoHelper seoHelper;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="SeoService"/> class.
         /// </summary>
         /// <param name="generalSettings">The general settings.</param>
-        public SeoService(IGeneralSettings generalSettings)
+        /// <param name="reportService">The report service.</param>
+        /// <param name="seoHelper">The SEO helper.</param>
+        public SeoService(
+            IGeneralSettings generalSettings,
+            IReportService reportService,
+            ISeoHelper seoHelper)
         {
             this.generalSettings = generalSettings;
+            this.reportService = reportService;
+            this.seoHelper = seoHelper;
         }
 
         /// <summary>
@@ -72,9 +91,33 @@ namespace Adopters.Business.Services
         {
             var routes = new Dictionary<string, string>();
             routes.Add("reports", "reportados");
+            routes.Add("newreport", "reportar");
+            routes.Add("login", "registrarse");
             routes.Add("report", "reportado/{0}");
             routes.Add("home", string.Empty);
             return routes;
+        }
+
+        /// <summary>
+        /// Gets the sitemap.
+        /// </summary>
+        /// <returns>the XML Site map</returns>
+        public async Task<string> GetSitemap()
+        {
+            var routes = new List<SitemapRoute>();
+            routes.Add(new SitemapRoute { Url = this.generalSettings.SiteUrl });
+            routes.Add(new SitemapRoute { Url = this.GetFullRoute("reports") });
+            routes.Add(new SitemapRoute { Url = this.GetFullRoute("newreport") });
+            routes.Add(new SitemapRoute { Url = this.GetFullRoute("login") });
+
+            var allReports = await this.reportService.GetAll();
+
+            foreach (var report in allReports)
+            {
+                routes.Add(new SitemapRoute { Url = this.GetFullRoute("report", report.FriendlyName) });
+            }
+
+            return this.seoHelper.GetSiteMapXml(routes);
         }
     }
 }

@@ -6,6 +6,7 @@
 namespace Adopters.Business.Services
 {
     using Adopters.Data.Entities;
+    using Beto.Core.Data.Files;
 
     /// <summary>
     /// Interface of picture service
@@ -19,7 +20,8 @@ namespace Adopters.Business.Services
         /// <param name="width">The width.</param>
         /// <param name="height">The height.</param>
         /// <param name="forceResize">if set to <c>true</c> [force resize].</param>
+        /// <param name="mode">the mode of resize</param>
         /// <returns>the path of the resized file</returns>
-        string GetPicturePath(File file, int width, int height, bool forceResize = false);
+        string GetPicturePath(File file, int width, int height, bool forceResize = false, ResizeMode mode = ResizeMode.Crop);
     }
 }

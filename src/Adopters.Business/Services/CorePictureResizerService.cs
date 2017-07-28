@@ -38,7 +38,8 @@ namespace Adopters.Business.Services
         /// <param name="originalPath">The original path.</param>
         /// <param name="width">The width.</param>
         /// <param name="height">The height.</param>
-        public void ResizePicture(string resizedPath, string originalPath, int width, int height)
+        /// <param name="mode">the mode of resizing</param>
+        public void ResizePicture(string resizedPath, string originalPath, int width, int height, Beto.Core.Data.Files.ResizeMode mode = Beto.Core.Data.Files.ResizeMode.Crop)
         {
             try
             {
@@ -47,7 +48,7 @@ namespace Adopters.Business.Services
                     var resizeOptions = new ResizeOptions()
                     {
                         Size = new SixLabors.Primitives.Size { Width = width, Height = height },
-                        Mode = ResizeMode.Crop
+                        Mode = this.GetImageMode(mode)
                     };
 
                     image
@@ -69,7 +70,8 @@ namespace Adopters.Business.Services
         /// <param name="resizedPath">The resized path.</param>
         /// <param name="width">The width.</param>
         /// <param name="height">The height.</param>
-        public void ResizePicture(byte[] contentFile, string resizedPath, int width, int height)
+        /// <param name="mode">the mode of resizing</param>
+        public void ResizePicture(byte[] contentFile, string resizedPath, int width, int height, Beto.Core.Data.Files.ResizeMode mode = Beto.Core.Data.Files.ResizeMode.Crop)
         {
             try
             {
@@ -78,7 +80,7 @@ namespace Adopters.Business.Services
                     var resizeOptions = new ResizeOptions()
                     {
                         Size = new SixLabors.Primitives.Size { Width = width, Height = height },
-                        Mode = ResizeMode.Crop
+                        Mode = this.GetImageMode(mode)
                     };
 
                     image
@@ -91,6 +93,32 @@ namespace Adopters.Business.Services
             {
                 this.logService.Error(e);
             }
+        }
+
+        /// <summary>
+        /// Compares the image modes for Image Sharp
+        /// </summary>
+        /// <param name="mode">The mode.</param>
+        /// <returns>the new mode</returns>
+        private ImageSharp.Processing.ResizeMode GetImageMode(Beto.Core.Data.Files.ResizeMode mode)
+        {
+            var imageMode = ImageSharp.Processing.ResizeMode.Crop;
+
+            switch (mode)
+            {
+                default:
+                case Beto.Core.Data.Files.ResizeMode.Crop:
+                    imageMode = ImageSharp.Processing.ResizeMode.Crop;
+                    break;
+                case Beto.Core.Data.Files.ResizeMode.Pad:
+                    imageMode = ImageSharp.Processing.ResizeMode.Max;
+                    break;
+                case Beto.Core.Data.Files.ResizeMode.BoxPad:
+                    imageMode = ImageSharp.Processing.ResizeMode.BoxPad;
+                    break;
+            }
+
+            return imageMode;
         }
     }
 }

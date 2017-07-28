@@ -11,7 +11,9 @@ import { FileModel } from "../models/file.model";
 export class UploadFileDirective {
 
   @Output() onCompleted = new EventEmitter<FileModel>();
-  onError = new EventEmitter();
+  @Output() onSelected = new EventEmitter();
+  @Output() onError = new EventEmitter<any>();
+
   onProgress = new EventEmitter();
 
   defaultName:string;
@@ -22,7 +24,8 @@ export class UploadFileDirective {
   constructor(private el:ElementRef, private fileService:FileService) {
       
       el.nativeElement.onchange = () => {
-        this.fileSelected();
+          this.onSelected.emit();
+          this.fileSelected();
       };
   }
 
@@ -64,7 +67,9 @@ export class UploadFileDirective {
           
           alert(message);
           
-          fileUpload.val(null);
+          fileUpload.value = null;
+
+          this.onError.emit();
       }
       else if (errorExtensions) {
           var message = '';
@@ -80,7 +85,9 @@ export class UploadFileDirective {
 
           alert(message);
           
-          fileUpload.val(null);
+          fileUpload.value = null;
+
+          this.onError.emit();
       }
   }
 

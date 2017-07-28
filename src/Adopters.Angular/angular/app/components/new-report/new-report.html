@@ -78,8 +78,9 @@
                 </div>
                 <div class="form-group ">
                     <label for="image">Foto</label>
-                    <input name="image" type="file" adoUploadFile (onCompleted)="imageCompleted($event)" />
+                    <input name="image" type="file" adoUploadFile (onCompleted)="imageCompleted($event)" (onSelected)="imageSelected($event)" (onError)="imageError($event)" />
                     <img [src]="getImage(model.image.thumbnail)" *ngIf="model.image" width="100" height="100" />
+                    <div *ngIf="isLoadingImage">Cargando imagen</div>
                 </div>
                 <div style="clear:both"></div>
                 <div style="text-align:center">
@@ -88,7 +89,7 @@
                 </div>
                 <!--{{reportForm | json}}-->
                 <a type="submit" class="btn btn-default btn-lg" [routerLink]="getRoute('home')">Cancelar</a>
-                <button type="submit" class="btn btn-primary btn-lg">Enviar reporte</button>
+                <button type="submit" class="btn btn-primary btn-lg" [disabled]="isLoadingImage">Enviar reporte</button>
                 </div>
                 
                 </form>
